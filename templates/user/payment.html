@@ -348,6 +348,8 @@ var options = {
 
     "order_id": "{{ razorpay_order_id }}",
 
+    "callback_url": window.location.origin + "/user/payment-success",
+
     "prefill": {
 
         "name": "{{ user_name }}",
@@ -356,6 +358,10 @@ var options = {
 
         "contact": "{{ user_mobile }}"
 
+    },
+
+    "theme": {
+        "color": "#2563eb"
     },
 
     "handler": function (response) {
@@ -407,7 +413,7 @@ var rzp = new Razorpay(options);
 
 rzp.on('payment.failed', function (response) {
 
-    alert("Payment failed: " + response.error.description);
+    alert("Payment failed: " + (response.error ? response.error.description : "Payment could not be completed."));
 
 });
 

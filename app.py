@@ -2520,35 +2520,31 @@ def user_payment():
 # VERIFY RAZORPAY PAYMENT + SAVE ORDER
 # =========================================================
 
-@app.route('/user/payment-success', methods=['POST'])
+@app.route('/user/payment-success', methods=['GET', 'POST'])
 def payment_success():
 
     if 'user_id' not in session:
+        flash("Please login to view your order.", "danger")
         return redirect('/user-login')
 
-    razorpay_payment_id = request.form.get('razorpay_payment_id')
-    razorpay_order_id = request.form.get('razorpay_order_id')
-    razorpay_signature = request.form.get('razorpay_signature')
+    razorpay_payment_id = request.form.get('razorpay_payment_id') or request.args.get('razorpay_payment_id')
+    razorpay_order_id = request.form.get('razorpay_order_id') or request.args.get('razorpay_order_id')
+    razorpay_signature = request.form.get('razorpay_signature') or request.args.get('razorpay_signature')
 
-    server_order_id = session.get('razorpay_order_id')
-
+    print("Browser Payment ID:", razorpay_payment_id)
     print("Browser Order ID:", razorpay_order_id)
-    print("Session Order ID:", server_order_id)
 
     if not razorpay_payment_id:
-        return "Payment ID missing", 400
+        flash("Payment ID missing.", "danger")
+        return redirect('/user/cart')
 
     if not razorpay_order_id:
-        return "Order ID missing", 400
+        flash("Order ID missing.", "danger")
+        return redirect('/user/cart')
 
     if not razorpay_signature:
-        return "Payment signature missing", 400
-
-    if not server_order_id:
-        return "Invalid order: no Razorpay order found in session", 400
-
-    if razorpay_order_id != server_order_id:
-        return "Invalid order: Order ID mismatch", 400
+        flash("Payment signature missing.", "danger")
+        return redirect('/user/cart')
 
     conn = None
     cursor = None
