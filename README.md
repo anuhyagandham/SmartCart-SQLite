@@ -1,22 +1,26 @@
 # 🛒 SmartCart
 
-SmartCart is a responsive Flask and MySQL based E-Commerce Web Application designed to provide a simple, secure, and user-friendly online shopping experience.
-
-The application provides separate User and Admin modules with product management, shopping cart operations, order management, Razorpay payment integration, and invoice generation.
-
----
+SmartCart is a responsive E-Commerce Web Application developed using Python Flask and SQLite. It provides a simple and user-friendly online shopping experience with separate User and Admin modules.
 
 ## 📌 Project Overview
 
-SmartCart is a full-stack E-Commerce web application developed using Python Flask and MySQL.
+SmartCart allows users to:
 
-Users can create an account, browse products, search and filter products, add products to their cart, manage quantities, provide a delivery address, make online payments, view their orders, and download invoices.
+- Create an account
+- Verify their account using OTP
+- Login securely
+- Browse products
+- Search and filter products
+- Add products to cart
+- Manage product quantities
+- Provide delivery address
+- Make online payments using Razorpay
+- View previous orders
+- Download invoices
 
-Administrators can manage products and product images through a dedicated Admin Dashboard.
+Administrators can manage products, product images, and their profile through a dedicated Admin Dashboard.
 
-The application follows a responsive design approach so that the interface can be used across desktop, tablet, and mobile devices.
-
----
+The application is designed to work across desktop, tablet, and mobile devices.
 
 ## ✨ Features
 
@@ -43,8 +47,6 @@ The application follows a responsive design approach so that the interface can b
 - Download Invoice
 - User Logout
 
----
-
 ### 👨‍💼 Admin Features
 
 - Admin Registration
@@ -61,8 +63,6 @@ The application follows a responsive design approach so that the interface can b
 - Admin Profile Management
 - Profile Image Upload
 - Admin Logout
-
----
 
 ## 💳 Payment Integration
 
@@ -86,3 +86,161 @@ Order Confirmation
 My Orders
        ↓
 Download Invoice
+```
+
+## 🛠️ Technologies Used
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap
+
+### Backend
+
+- Python
+- Flask
+
+### Database
+
+- SQLite
+
+### Payment
+
+- Razorpay
+
+### Security
+
+- Bcrypt Password Hashing
+- Session-based Authentication
+
+### Other Tools
+
+- Git
+- GitHub
+- VS Code
+
+## 📂 Project Structure
+
+```text
+SmartCart/
+│
+├── app.py
+├── config.py
+├── init_db.py
+├── migrate_mysql_to_sqlite.py
+├── requirements.txt
+├── schema.sql
+├── README.md
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   │
+│   ├── admin_uploads/
+│   │
+│   └── uploads/
+│       └── product_images/
+│
+├── templates/
+│   ├── admin/
+│   ├── user/
+│   ├── index.html
+│   └── welcome.html
+│
+└── utils/
+    └── pdf_generator.py
+```
+
+## 🚀 How to Run
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/anuhyagandham/SmartCart-SQLite.git
+```
+
+### 2. Open the Project
+
+```bash
+cd SmartCart-SQLite
+```
+
+### 3. Create a Virtual Environment
+
+For Windows:
+
+```bash
+python -m venv venv
+```
+
+### 4. Activate the Virtual Environment
+
+```bash
+venv\Scripts\activate
+```
+
+### 5. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 6. Initialize the SQLite Database
+
+```bash
+python init_db.py
+```
+
+### 7. Run the Application
+
+```bash
+python app.py
+```
+
+### 8. Open in Browser
+
+```text
+http://127.0.0.1:5000/
+```
+
+## 🔐 Security
+
+Sensitive configuration files and local database files are excluded from GitHub using `.gitignore`.
+
+The following files are not committed to the repository:
+
+- `config.py`
+- `smartcart.db`
+- `*.db`
+- `.env`
+- Virtual environment files
+
+Passwords are protected using Bcrypt hashing.
+
+## 🌐 Deployment
+
+The SmartCart application is designed to be deployed using PythonAnywhere with SQLite as the database.
+
+The deployment process includes:
+
+- GitHub repository setup
+- PythonAnywhere configuration
+- Virtual environment setup
+- Dependency installation
+- SQLite database setup
+- Flask WSGI configuration
+- Web application deployment
+
+## 👩‍💻 Author
+
+**Anuhya Gandham**
+
+Python Full Stack Trainee
+
+GitHub: https://github.com/anuhyagandham
+
+## 📄 License
+
+This project was developed as an academic/project demonstration.
