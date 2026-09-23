@@ -1080,75 +1080,70 @@ def admin_profile():
 def admin_profile_update():
 
     if 'admin_id' not in session:
-
-        flash(
-            "Please login!",
-            "danger"
-        )
-
+        flash("Please login!", "danger")
         return redirect('/admin-login')
 
     admin_id = session['admin_id']
 
-    name = request.form['name']
-    email = request.form['email']
-    new_password = request.form['password']
-    new_image = request.files['profile_image']
+    name = request.form.get('name', '').strip()
+    email = request.form.get('email', '').strip()
+    new_password = request.form.get('password', '').strip()
+    new_image = request.files.get('profile_image')
+
+    if not name or not email:
+        flash("Name and email are required!", "danger")
+        return redirect('/admin/profile')
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    # Check if email is already taken by another admin
     cursor.execute(
-        """
-        SELECT *
-        FROM admin
-        WHERE admin_id=?
-        """,
+        "SELECT admin_id FROM admin WHERE email=? AND admin_id!=?",
+        (email, admin_id)
+    )
+    existing = cursor.fetchone()
+
+    if existing:
+        cursor.close()
+        conn.close()
+        flash("This email is already in use by another admin!", "danger")
+        return redirect('/admin/profile')
+
+    cursor.execute(
+        "SELECT * FROM admin WHERE admin_id=?",
         (admin_id,)
     )
-
     admin = cursor.fetchone()
 
     old_image_name = admin['profile_image']
 
     if new_password:
-
         hashed_password = bcrypt.hashpw(
             new_password.encode('utf-8'),
             bcrypt.gensalt()
-        )
-
+        ).decode('utf-8')
     else:
-
         hashed_password = admin['password']
 
     if new_image and new_image.filename != "":
-
-        new_filename = secure_filename(
-            new_image.filename
-        )
-
+        new_filename = secure_filename(new_image.filename)
         image_path = os.path.join(
             app.config['ADMIN_UPLOAD_FOLDER'],
             new_filename
         )
-
         new_image.save(image_path)
 
         if old_image_name:
-
             old_image_path = os.path.join(
                 app.config['ADMIN_UPLOAD_FOLDER'],
                 old_image_name
             )
-
             if os.path.exists(old_image_path):
                 os.remove(old_image_path)
 
         final_image_name = new_filename
-
     else:
-
         final_image_name = old_image_name
 
     cursor.execute("""
@@ -1175,11 +1170,7 @@ def admin_profile_update():
     session['admin_name'] = name
     session['admin_email'] = email
 
-    flash(
-        "Profile updated successfully!",
-        "success"
-    )
-
+    flash("Profile updated successfully!", "success")
     return redirect('/admin/profile')
 
 
