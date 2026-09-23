@@ -15,11 +15,17 @@ import razorpay
 from werkzeug.utils import secure_filename
 from flask import make_response, render_template
 from utils.pdf_generator import generate_pdf
+from init_db import init_db
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, "smartcart.db")
 
+# Auto-initialize database on deployment if it does not exist
+if not os.path.exists(DATABASE):
+    init_db()
+
 def dict_factory(cursor, row):
+
     d = {}
     for idx, col in enumerate(cursor.description):
         d[col[0]] = row[idx]
@@ -404,14 +410,151 @@ def admin_logout():
 
 
 # =========================================================
+# ADMIN FORGOT PASSWORD - REQUEST OTP
+# =========================================================
+
+@app.route('/admin/forgot-password', methods=['GET', 'POST'])
+def admin_forgot_password():
+
+    if request.method == 'GET':
+        return render_template('admin/forgot_password.html')
+
+    email = request.form.get('email')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM admin WHERE email=?", (email,))
+    admin = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not admin:
+        flash("Admin email address not found!", "danger")
+        return redirect('/admin/forgot-password')
+
+    otp = random.randint(100000, 999999)
+    session['forgot_admin_email'] = email
+    session['forgot_admin_otp'] = str(otp)
+    session.pop('admin_reset_allowed', None)
+
+    message = Message(
+        subject="SmartCart Admin Password Reset OTP",
+        sender=config.MAIL_USERNAME,
+        recipients=[email]
+    )
+    message.body = f"Your OTP to reset your SmartCart Admin password is: {otp}"
+    mail.send(message)
+
+    flash("Reset OTP sent to your admin email!", "success")
+    return redirect('/admin/verify-forgot-otp')
+
+
+# =========================================================
+# ADMIN FORGOT PASSWORD - VERIFY OTP
+# =========================================================
+
+@app.route('/admin/verify-forgot-otp', methods=['GET', 'POST'])
+def admin_verify_forgot_otp():
+
+    if request.method == 'GET':
+        return render_template('admin/verify_forgot_otp.html')
+
+    user_otp = request.form.get('otp')
+    stored_otp = session.get('forgot_admin_otp')
+
+    if not stored_otp or str(user_otp).strip() != str(stored_otp).strip():
+        flash("Invalid or expired OTP. Please try again!", "danger")
+        return redirect('/admin/verify-forgot-otp')
+
+    session['admin_reset_allowed'] = True
+    flash("OTP verified successfully! Please enter your new password.", "success")
+    return redirect('/admin/reset-password')
+
+
+# =========================================================
+# ADMIN FORGOT PASSWORD - RESEND OTP
+# =========================================================
+
+@app.route('/admin/resend-forgot-otp', methods=['GET'])
+def admin_resend_forgot_otp():
+
+    email = session.get('forgot_admin_email')
+
+    if not email:
+        flash("Session expired. Please request a password reset again.", "danger")
+        return redirect('/admin/forgot-password')
+
+    otp = random.randint(100000, 999999)
+    session['forgot_admin_otp'] = str(otp)
+
+    message = Message(
+        subject="SmartCart Admin Password Reset OTP (Resent)",
+        sender=config.MAIL_USERNAME,
+        recipients=[email]
+    )
+    message.body = f"Your new OTP to reset your SmartCart Admin password is: {otp}"
+    mail.send(message)
+
+    flash("A new reset OTP has been sent to your email!", "success")
+    return redirect('/admin/verify-forgot-otp')
+
+
+# =========================================================
+# ADMIN FORGOT PASSWORD - RESET PASSWORD
+# =========================================================
+
+@app.route('/admin/reset-password', methods=['GET', 'POST'])
+def admin_reset_password():
+
+    if not session.get('admin_reset_allowed') or not session.get('forgot_admin_email'):
+        flash("Unauthorized access. Please initiate password reset first.", "danger")
+        return redirect('/admin/forgot-password')
+
+    if request.method == 'GET':
+        return render_template('admin/reset_password.html')
+
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+
+    if new_password != confirm_password:
+        flash("Passwords do not match! Please try again.", "danger")
+        return redirect('/admin/reset-password')
+
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE admin SET password=? WHERE email=?",
+        (hashed_password, session['forgot_admin_email'])
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    session.pop('forgot_admin_email', None)
+    session.pop('forgot_admin_otp', None)
+    session.pop('admin_reset_allowed', None)
+
+    flash("Admin password reset successfully! Please login with your new password.", "success")
+    return redirect('/admin-login')
+
+
+
+
+# =========================================================
 # IMAGE UPLOAD PATHS
 # =========================================================
 
-UPLOAD_FOLDER = 'static/uploads/product_images'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads', 'product_images')
+ADMIN_UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads', 'admin_profiles')
 
-ADMIN_UPLOAD_FOLDER = 'static/uploads/admin_profiles'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(ADMIN_UPLOAD_FOLDER, exist_ok=True)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ADMIN_UPLOAD_FOLDER'] = ADMIN_UPLOAD_FOLDER
+
 
 
 # =========================================================
@@ -1268,6 +1411,139 @@ def user_login():
     )
 
     return redirect('/user-dashboard')
+
+
+# =========================================================
+# USER FORGOT PASSWORD - REQUEST OTP
+# =========================================================
+
+@app.route('/user/forgot-password', methods=['GET', 'POST'])
+def user_forgot_password():
+
+    if request.method == 'GET':
+        return render_template('user/forgot_password.html')
+
+    email = request.form.get('email')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM admin WHERE email=?", (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not user:
+        flash("Registered email address not found!", "danger")
+        return redirect('/user/forgot-password')
+
+    otp = random.randint(100000, 999999)
+    session['forgot_user_email'] = email
+    session['forgot_user_otp'] = str(otp)
+    session.pop('user_reset_allowed', None)
+
+    message = Message(
+        subject="SmartCart Password Reset OTP",
+        sender=config.MAIL_USERNAME,
+        recipients=[email]
+    )
+    message.body = f"Your OTP to reset your SmartCart password is: {otp}"
+    mail.send(message)
+
+    flash("Reset OTP sent to your email!", "success")
+    return redirect('/user/verify-forgot-otp')
+
+
+# =========================================================
+# USER FORGOT PASSWORD - VERIFY OTP
+# =========================================================
+
+@app.route('/user/verify-forgot-otp', methods=['GET', 'POST'])
+def user_verify_forgot_otp():
+
+    if request.method == 'GET':
+        return render_template('user/verify_forgot_otp.html')
+
+    user_otp = request.form.get('otp')
+    stored_otp = session.get('forgot_user_otp')
+
+    if not stored_otp or str(user_otp).strip() != str(stored_otp).strip():
+        flash("Invalid or expired OTP. Please try again!", "danger")
+        return redirect('/user/verify-forgot-otp')
+
+    session['user_reset_allowed'] = True
+    flash("OTP verified successfully! Please enter your new password.", "success")
+    return redirect('/user/reset-password')
+
+
+# =========================================================
+# USER FORGOT PASSWORD - RESEND OTP
+# =========================================================
+
+@app.route('/user/resend-forgot-otp', methods=['GET'])
+def user_resend_forgot_otp():
+
+    email = session.get('forgot_user_email')
+
+    if not email:
+        flash("Session expired. Please request a password reset again.", "danger")
+        return redirect('/user/forgot-password')
+
+    otp = random.randint(100000, 999999)
+    session['forgot_user_otp'] = str(otp)
+
+    message = Message(
+        subject="SmartCart Password Reset OTP (Resent)",
+        sender=config.MAIL_USERNAME,
+        recipients=[email]
+    )
+    message.body = f"Your new OTP to reset your SmartCart password is: {otp}"
+    mail.send(message)
+
+    flash("A new reset OTP has been sent to your email!", "success")
+    return redirect('/user/verify-forgot-otp')
+
+
+# =========================================================
+# USER FORGOT PASSWORD - RESET PASSWORD
+# =========================================================
+
+@app.route('/user/reset-password', methods=['GET', 'POST'])
+def user_reset_password():
+
+    if not session.get('user_reset_allowed') or not session.get('forgot_user_email'):
+        flash("Unauthorized access. Please initiate password reset first.", "danger")
+        return redirect('/user/forgot-password')
+
+    if request.method == 'GET':
+        return render_template('user/reset_password.html')
+
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+
+    if new_password != confirm_password:
+        flash("Passwords do not match! Please try again.", "danger")
+        return redirect('/user/reset-password')
+
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE admin SET password=? WHERE email=?",
+        (hashed_password, session['forgot_user_email'])
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    session.pop('forgot_user_email', None)
+    session.pop('forgot_user_otp', None)
+    session.pop('user_reset_allowed', None)
+
+    flash("Password reset successfully! Please login with your new password.", "success")
+    return redirect('/user-login')
+
+
 
 
 # =========================================================

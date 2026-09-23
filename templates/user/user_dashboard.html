@@ -14,9 +14,12 @@
         <span>Smart<span>Cart</span></span>
     </a>
 
-    <nav class="smart-nav">
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="smart-nav" id="smartNavMenu">
         <a href="/user-dashboard" class="active">Dashboard</a>
         <a href="/user/products">Products</a>
+        <a href="/user/cart">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
         <a href="/user/my-orders">My Orders</a>
         <a href="/user-logout" class="logout-nav">Logout</a>
     </nav>
@@ -174,5 +177,6 @@
     <span>© 2026 SmartCart</span>
 </footer>
 
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

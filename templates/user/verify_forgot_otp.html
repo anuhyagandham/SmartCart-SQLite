@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartCart | Admin OTP Verification</title>
+    <title>SmartCart | Verify Reset OTP</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -19,8 +19,7 @@
 
     <nav class="smart-nav" id="smartNavMenu">
         <a href="/">Home</a>
-        <a href="/admin-login">Admin Login</a>
-        <a href="/admin-signup">Admin Signup</a>
+        <a href="/user-login">Login</a>
     </nav>
 </header>
 
@@ -29,14 +28,14 @@
     <div class="otp-card">
 
         <div class="otp-icon">
-            🛡️
+            🔐
         </div>
 
         <div class="otp-heading">
-            <span>ADMINISTRATOR VERIFICATION</span>
-            <h1>Verify Admin Registration</h1>
+            <span>SECURITY VERIFICATION</span>
+            <h1>Verify Reset OTP</h1>
             <p>
-                Enter the 6-digit OTP sent to your email and create your password to complete registration.
+                Enter the 6-digit OTP sent to your email to verify password reset.
             </p>
         </div>
 
@@ -51,7 +50,7 @@
             {% endif %}
         {% endwith %}
 
-        <form method="POST" action="/verify-otp">
+        <form method="POST" action="/user/verify-forgot-otp">
 
             <div class="otp-form-group">
                 <label for="otp">Enter 6-Digit OTP</label>
@@ -66,27 +65,16 @@
                 >
             </div>
 
-            <div class="otp-form-group">
-                <label for="password">Create Admin Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Create admin password"
-                    required
-                >
-            </div>
-
             <button type="submit" class="otp-submit">
-                Verify & Register Admin
+                Verify OTP
                 <span>→</span>
             </button>
 
         </form>
 
         <div class="otp-actions">
-            <a href="/admin/resend-otp" class="resend-otp-btn">Resend OTP</a>
-            <a href="/admin-login" class="otp-login-link">← Back to Login</a>
+            <a href="/user/resend-forgot-otp" class="resend-otp-btn">Resend OTP</a>
+            <a href="/user-login" class="otp-login-link">← Back to Login</a>
         </div>
 
     </div>
@@ -95,7 +83,7 @@
 
 <footer class="smart-footer">
     <div class="footer-logo">
-        🛒 SmartCart Admin
+        🛒 SmartCart
     </div>
     <p>
         Smart shopping. Simple experience.

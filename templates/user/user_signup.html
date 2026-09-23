@@ -17,9 +17,12 @@
             <span>Smart<span>Cart</span></span>
         </a>
 
-        <nav class="smart-nav">
+        <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <nav class="smart-nav" id="smartNavMenu">
             <a href="/">Home</a>
             <a href="/user-login">Login</a>
+            <a href="/admin-login">Admin</a>
         </nav>
 
     </header>
@@ -40,7 +43,7 @@
 
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% for category, message in messages %}
-                    <div class="auth-message">
+                    <div class="auth-message {{ category }}">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -106,6 +109,7 @@
 
     </footer>
 
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>

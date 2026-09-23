@@ -234,15 +234,19 @@
 
 <body>
 
-<header>
+<header class="smart-header smart-header-dark">
 
-    <div class="logo">
-        🛒 SmartCart
+    <div class="smart-logo" style="color: white;">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
     </div>
 
-    <nav>
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="smart-nav" id="smartNavMenu">
         <a href="/">Home</a>
         <a href="/admin-signup">Admin Signup</a>
+        <a href="/user-login">User Login</a>
     </nav>
 
 </header>
@@ -322,6 +326,10 @@
             </div>
 
 
+            <div class="forgot-link-wrapper" style="margin-top: 5px; margin-bottom: 18px;">
+                <a href="/admin/forgot-password" style="color: #2563eb; text-decoration: none; font-size: 13px; font-weight: bold;">Forgot Password?</a>
+            </div>
+
             <button type="submit" class="login-button">
                 Login
             </button>
@@ -347,6 +355,8 @@
 <footer>
     © 2026 SmartCart · Smart shopping. Simple experience.
 </footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>

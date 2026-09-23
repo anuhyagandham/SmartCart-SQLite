@@ -15,9 +15,12 @@
         <span>Smart<span>Cart</span></span>
     </a>
 
-    <nav class="smart-nav">
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="smart-nav" id="smartNavMenu">
         <a href="/">Home</a>
         <a href="/user-login">Login</a>
+        <a href="/user-signup">Register</a>
     </nav>
 </header>
 
@@ -38,12 +41,14 @@
         </div>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, message in messages %}
-                <div class="otp-message">
-                    <span>✓</span>
-                    {{ message }}
-                </div>
-            {% endfor %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="otp-message {{ category }}">
+                        <span>{% if category == 'success' %}✓{% else %}⚠️{% endif %}</span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
 
         <form method="POST" action="/user/verify-otp">
@@ -79,13 +84,10 @@
 
         </form>
 
-        <div class="otp-divider">
-            <span>Already have an account?</span>
+        <div class="otp-actions">
+            <a href="/user/resend-otp" class="resend-otp-btn">Resend OTP</a>
+            <a href="/user-login" class="otp-login-link">← Back to Login</a>
         </div>
-
-        <a href="/user-login" class="otp-login-link">
-            ← Back to Login
-        </a>
 
     </div>
 
@@ -106,6 +108,8 @@
     </span>
 
 </footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>
