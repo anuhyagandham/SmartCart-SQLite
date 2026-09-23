@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | My Orders</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="orders-page">
+
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+
+        <div class="logo-icon">🛒</div>
+
+        <span>Smart<span>Cart</span></span>
+
+    </a>
+
+
+    <nav class="smart-nav">
+
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/cart">Cart</a>
+        <a href="/user/my-orders" class="active">My Orders</a>
+        <a href="/user-logout">Logout</a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="orders-main">
+
+
+    <div class="orders-wrapper">
+
+
+        <div class="orders-heading">
+
+            <div class="orders-icon">
+                📦
+            </div>
+
+            <div>
+
+                <span class="section-label">
+                    YOUR SHOPPING
+                </span>
+
+                <h1>
+                    My Orders
+                </h1>
+
+                <p>
+                    View your order history and download your invoices.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="orders-message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+
+        {% if orders %}
+
+
+            <div class="orders-list">
+
+
+                {% for order in orders %}
+
+
+                <div class="order-card">
+
+
+                    <div class="order-card-header">
+
+
+                        <div class="order-title">
+
+                            <div class="order-box-icon">
+                                📦
+                            </div>
+
+                            <div>
+
+                                <span class="order-label">
+                                    ORDER
+                                </span>
+
+                                <h2>
+                                    #{{ order.order_id }}
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="payment-status">
+
+                            {% if order.payment_status|lower == 'paid' %}
+
+                                <span class="status-dot paid-dot"></span>
+                                <span>Paid</span>
+
+                            {% else %}
+
+                                <span class="status-dot"></span>
+                                <span>{{ order.payment_status }}</span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="order-details">
+
+
+                        <div class="order-detail">
+
+                            <span class="detail-label">
+                                TOTAL AMOUNT
+                            </span>
+
+                            <strong class="order-amount">
+                                ₹{{ order.amount }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="order-detail">
+
+                            <span class="detail-label">
+                                PAYMENT STATUS
+                            </span>
+
+                            <strong>
+                                {{ order.payment_status }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="order-detail">
+
+                            <span class="detail-label">
+                                PAYMENT ID
+                            </span>
+
+                            <strong class="payment-id">
+                                {{ order.razorpay_payment_id }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="order-detail">
+
+                            <span class="detail-label">
+                                ORDER DATE
+                            </span>
+
+                            <strong>
+                                {{ order.created_at }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="order-card-footer">
+
+
+                        <span class="order-complete">
+
+                            <span>✓</span>
+
+                            Payment completed
+
+                        </span>
+
+
+                        <div class="order-actions">
+
+                            <a
+                                href="/user/order-success/{{ order.order_id }}"
+                                class="view-order-btn"
+                            >
+                                View Order Details
+                                <span>→</span>
+                            </a>
+
+
+                            <a
+                                href="/user/download-invoice/{{ order.order_id }}"
+                                class="invoice-btn"
+                            >
+                                ↓ Download Invoice
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-orders">
+
+
+                <div class="empty-orders-icon">
+                    📦
+                </div>
+
+
+                <span class="section-label">
+                    ORDER HISTORY
+                </span>
+
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+
+                <p>
+                    You haven't placed any orders yet.
+                    Start shopping and your orders will appear here.
+                </p>
+
+
+                <a
+                    href="/user/products"
+                    class="start-shopping-btn"
+                >
+                    Start Shopping
+                    <span>→</span>
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>

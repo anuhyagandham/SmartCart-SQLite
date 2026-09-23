@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | Product Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="product-details-page">
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <nav class="smart-nav">
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products" class="active">Products</a>
+
+        <a href="/user/cart">
+            Cart
+            ({{ session.get('cart')|length if session.get('cart') else 0 }})
+        </a>
+
+        <a href="/user/my-orders">My Orders</a>
+
+        <a href="/user-logout" class="logout-nav">
+            Logout
+        </a>
+    </nav>
+
+</header>
+
+<main class="product-details-main">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="products-message {{ category }}">
+                <span>✓</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="product-details-container">
+
+        <div class="product-details-image">
+
+            {% if product.image %}
+
+                <img
+                    src="{{ url_for('static', filename='uploads/product_images/' ~ product.image) }}"
+                    alt="{{ product.name }}"
+                >
+
+            {% else %}
+
+                <div class="product-details-placeholder">
+                    🛍️
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="product-details-content">
+
+            <span class="details-category">
+                {{ product.category }}
+            </span>
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+            <div class="details-rating">
+                ⭐ 4.5
+                <span>•</span>
+                SmartCart Product
+            </div>
+
+            <div class="details-price">
+                ₹{{ "%.2f"|format(product.price) }}
+            </div>
+
+            <div class="details-divider"></div>
+
+            <div class="product-information">
+
+                <div class="info-row">
+                    <span>Product ID</span>
+                    <strong>{{ product.product_id }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Category</span>
+                    <strong>{{ product.category }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Availability</span>
+                    <strong class="available">
+                        ✓ Available
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="details-actions">
+
+                <a
+                    href="/user/add-to-cart/{{ product.product_id }}"
+                    class="details-add-cart"
+                >
+                    🛒 Add to Cart
+                </a>
+
+                <a
+                    href="/user/add-to-cart/{{ product.product_id }}"
+                    class="details-buy-now"
+                >
+                    Buy Now
+                    <span>→</span>
+                </a>
+
+            </div>
+
+            <div class="details-links">
+
+                <a href="/user/products">
+                    ← Back to Products
+                </a>
+
+                <a href="/user-dashboard">
+                    Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="product-benefits">
+
+        <div class="benefit-item">
+            <div class="benefit-icon">🔒</div>
+            <div>
+                <strong>Secure Shopping</strong>
+                <span>Safe and reliable checkout</span>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">📦</div>
+            <div>
+                <strong>Easy Orders</strong>
+                <span>Manage your purchases easily</span>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">✓</div>
+            <div>
+                <strong>Quality Products</strong>
+                <span>Shop with confidence</span>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+</body>
+
+</html>

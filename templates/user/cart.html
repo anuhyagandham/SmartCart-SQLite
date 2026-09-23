@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | My Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="cart-page">
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <nav class="smart-nav">
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+
+        <a href="/user/cart" class="active">
+            Cart
+            ({{ session.get('cart')|length if session.get('cart') else 0 }})
+        </a>
+
+        <a href="/user/my-orders">My Orders</a>
+
+        <a href="/user-logout" class="logout-nav">
+            Logout
+        </a>
+    </nav>
+
+</header>
+
+<main class="cart-main">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="cart-message {{ category }}">
+                <span>✓</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="cart-heading">
+
+        <div>
+            <span>SMARTCART</span>
+
+            <h1>My Cart</h1>
+
+            <p>
+                Review your selected products before proceeding to checkout.
+            </p>
+        </div>
+
+        <a href="/user/products" class="continue-shopping-btn">
+            ← Continue Shopping
+        </a>
+
+    </section>
+
+    {% if not cart %}
+
+        <section class="empty-cart">
+
+            <div class="empty-cart-icon">
+                🛒
+            </div>
+
+            <h2>Your Cart is Empty</h2>
+
+            <p>
+                Looks like you haven't added anything to your cart yet.
+                Explore our products and start shopping.
+            </p>
+
+            <a href="/user/products" class="shop-now-btn">
+                Start Shopping →
+            </a>
+
+        </section>
+
+    {% else %}
+
+    <form method="POST" action="/user/address" id="cart-form">
+
+        <section class="cart-card">
+
+            <div class="cart-card-header">
+
+                <div>
+                    <h2>Cart Items</h2>
+
+                    <p>
+                        {{ cart|length }} item{% if cart|length != 1 %}s{% endif %}
+                        in your cart
+                    </p>
+                </div>
+
+                <label class="select-all-top">
+                    <input
+                        type="checkbox"
+                        id="select-all"
+                    >
+                    <span>Select All</span>
+                </label>
+
+            </div>
+
+            <div class="cart-items">
+
+                {% for pid, item in cart.items() %}
+
+                <div class="cart-item">
+
+                    <div class="cart-select">
+
+                        <input
+                            type="checkbox"
+                            class="product-checkbox"
+                            name="selected_products"
+                            value="{{ pid }}"
+                            data-price="{{ item.price }}"
+                            data-quantity="{{ item.quantity }}"
+                        >
+
+                    </div>
+
+                    <div class="cart-product-image">
+
+                        {% if item.image %}
+
+                            <img
+                                src="{{ url_for('static', filename='uploads/product_images/' ~ item.image) }}"
+                                alt="{{ item.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="cart-placeholder">
+                                🛍️
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="cart-product-info">
+
+                        <span class="cart-category">
+                            {{ item.category if item.category else 'Product' }}
+                        </span>
+
+                        <h3>
+                            {{ item.name }}
+                        </h3>
+
+                        <p>
+                            Product ID: {{ pid }}
+                        </p>
+
+                        <div class="cart-mobile-price">
+                            ₹{{ "%.2f"|format(item.price) }}
+                        </div>
+
+                    </div>
+
+                    <div class="cart-price">
+
+                        <span>Price</span>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(item.price) }}
+                        </strong>
+
+                    </div>
+
+                    <div class="cart-quantity">
+
+                        <span>Quantity</span>
+
+                        <div class="quantity-control">
+
+                            <a href="/user/cart/decrease/{{ pid }}">
+                                −
+                            </a>
+
+                            <strong>
+                                {{ item.quantity }}
+                            </strong>
+
+                            <a href="/user/cart/increase/{{ pid }}">
+                                +
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="cart-total">
+
+                        <span>Total</span>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(item.price * item.quantity) }}
+                        </strong>
+
+                    </div>
+
+                    <div class="cart-remove">
+
+                        <a href="/user/cart/remove/{{ pid }}">
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        <section class="cart-summary">
+
+            <div class="summary-left">
+
+                <div class="summary-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <strong>Ready to checkout?</strong>
+
+                    <p>
+                        Select the products you want to purchase.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="summary-right">
+
+                <div class="selected-summary">
+
+                    <span>Selected Total</span>
+
+                    <strong>
+                        ₹<span id="selected-total">0.00</span>
+                    </strong>
+
+                </div>
+
+                <button
+                    type="submit"
+                    id="proceed-btn"
+                    class="proceed-btn"
+                    disabled
+                >
+                    Proceed to Checkout
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </section>
+
+    </form>
+
+    {% endif %}
+
+</main>
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+<script>
+
+const checkboxes =
+    document.querySelectorAll(".product-checkbox");
+
+const selectAll =
+    document.getElementById("select-all");
+
+const selectedTotal =
+    document.getElementById("selected-total");
+
+const proceedButton =
+    document.getElementById("proceed-btn");
+
+function calculateTotal() {
+
+    let total = 0;
+    let selectedCount = 0;
+
+    checkboxes.forEach(function(checkbox) {
+
+        if (checkbox.checked) {
+
+            const price =
+                parseFloat(checkbox.dataset.price);
+
+            const quantity =
+                parseInt(checkbox.dataset.quantity);
+
+            if (!isNaN(price) && !isNaN(quantity)) {
+
+                total += price * quantity;
+
+            }
+
+            selectedCount++;
+
+        }
+
+    });
+
+    if (selectedTotal) {
+
+        selectedTotal.innerText =
+            total.toFixed(2);
+
+    }
+
+    if (proceedButton) {
+
+        proceedButton.disabled =
+            selectedCount === 0;
+
+    }
+
+    if (selectAll && checkboxes.length > 0) {
+
+        selectAll.checked =
+            selectedCount === checkboxes.length;
+
+    }
+
+}
+
+checkboxes.forEach(function(checkbox) {
+
+    const saved =
+        localStorage.getItem(
+            "cart_selected_" + checkbox.value
+        );
+
+    if (saved === "true") {
+
+        checkbox.checked = true;
+
+    }
+
+    checkbox.addEventListener("change", function() {
+
+        if (checkbox.checked) {
+
+            localStorage.setItem(
+                "cart_selected_" + checkbox.value,
+                "true"
+            );
+
+        } else {
+
+            localStorage.removeItem(
+                "cart_selected_" + checkbox.value
+            );
+
+        }
+
+        calculateTotal();
+
+    });
+
+});
+
+if (selectAll) {
+
+    selectAll.addEventListener("change", function() {
+
+        checkboxes.forEach(function(checkbox) {
+
+            checkbox.checked =
+                selectAll.checked;
+
+            if (selectAll.checked) {
+
+                localStorage.setItem(
+                    "cart_selected_" + checkbox.value,
+                    "true"
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "cart_selected_" + checkbox.value
+                );
+
+            }
+
+        });
+
+        calculateTotal();
+
+    });
+
+}
+
+calculateTotal();
+
+</script>
+
+</body>
+</html>

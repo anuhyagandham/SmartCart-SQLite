@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Product | SmartCart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #14213d;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #14213d;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .admin-label {
+            font-size: 14px;
+            color: #dbe5f3;
+        }
+
+        .logout-btn {
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .main {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-heading h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .page-heading p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(20, 33, 61, 0.08);
+            padding: 35px;
+            display: grid;
+            grid-template-columns: 45% 55%;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .image-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 360px;
+            height: 320px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .details-section {
+            padding: 10px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #eaf1ff;
+            color: #2563eb;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .product-name {
+            font-size: 32px;
+            margin-bottom: 18px;
+            color: #14213d;
+        }
+
+        .description-title {
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #475569;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .price {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 25px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .info-label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: #14213d;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .back-btn,
+        .edit-btn {
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: #e2e8f0;
+            color: #14213d;
+        }
+
+        .back-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .bottom-info {
+            margin-top: 25px;
+            background: #eef5ff;
+            border-left: 4px solid #2563eb;
+            padding: 16px 20px;
+            border-radius: 8px;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .footer {
+            background: #14213d;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 22px;
+            margin-top: 70px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .header {
+                padding: 16px 5%;
+            }
+
+            .admin-label {
+                display: none;
+            }
+
+            .main {
+                width: 92%;
+                margin: 35px auto;
+            }
+
+            .product-card {
+                grid-template-columns: 1fr;
+                padding: 25px;
+                gap: 25px;
+            }
+
+            .image-section {
+                min-height: 300px;
+            }
+
+            .product-image {
+                height: 260px;
+            }
+
+            .product-name {
+                font-size: 27px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .logo {
+                font-size: 19px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .logout-btn {
+                padding: 9px 13px;
+                font-size: 12px;
+            }
+
+            .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .product-card {
+                padding: 18px;
+            }
+
+            .image-section {
+                min-height: 250px;
+                padding: 20px;
+            }
+
+            .product-image {
+                height: 220px;
+            }
+
+            .product-name {
+                font-size: 24px;
+            }
+
+            .price {
+                font-size: 26px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .back-btn,
+            .edit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon">🛒</div>
+        <span>SmartCart</span>
+    </div>
+
+    <div class="header-right">
+        <span class="admin-label">Administrator</span>
+        <a href="/admin-logout" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<main class="main">
+
+    <div class="page-heading">
+        <h1>Product Details</h1>
+        <p>View complete information about this product</p>
+    </div>
+
+    <section class="product-card">
+
+        <div class="image-section">
+            <img
+                src="{{ url_for('static', filename='uploads/product_images/' ~ product.image) }}"
+                alt="{{ product.name }}"
+                class="product-image"
+            >
+        </div>
+
+        <div class="details-section">
+
+            <span class="category-badge">
+                {{ product.category }}
+            </span>
+
+            <h2 class="product-name">
+                {{ product.name }}
+            </h2>
+
+            <p class="description-title">Product Description</p>
+
+            <p class="description">
+                {{ product.description }}
+            </p>
+
+            <div class="price">
+                ₹{{ product.price }}
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <span class="info-label">Product ID</span>
+                    <span class="info-value">
+                        #{{ product.product_id }}
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">Category</span>
+                    <span class="info-value">
+                        {{ product.category }}
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">Price</span>
+                    <span class="info-value">
+                        ₹{{ product.price }}
+                    </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">Status</span>
+                    <span class="info-value">
+                        Available
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <a href="/admin/item-list" class="back-btn">
+                    ← Back to Products
+                </a>
+
+                <a href="/admin/update-item/{{ product.product_id }}" class="edit-btn">
+                    Edit Product
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="bottom-info">
+        Product information is displayed from your SmartCart product database.
+    </div>
+
+</main>
+
+<footer class="footer">
+    Smart shopping. Simple experience. &nbsp; © 2026 SmartCart
+</footer>
+
+</body>
+</html>

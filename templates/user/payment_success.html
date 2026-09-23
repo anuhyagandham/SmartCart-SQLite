@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Payment Successful</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="success-page">
+
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+
+        <div class="logo-icon">🛒</div>
+
+        <span>Smart<span>Cart</span></span>
+
+    </a>
+
+
+    <nav class="smart-nav">
+
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/my-orders">My Orders</a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="success-main">
+
+
+    <div class="success-card">
+
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <span class="success-label">
+            PAYMENT COMPLETED
+        </span>
+
+
+        <h1>
+            Payment Successful!
+        </h1>
+
+
+        <p class="success-message">
+            Your payment has been received successfully.
+            Thank you for shopping with SmartCart.
+        </p>
+
+
+
+        <div class="success-details">
+
+
+            <div class="success-detail-row">
+
+                <div class="detail-icon">
+                    💳
+                </div>
+
+                <div class="detail-content">
+
+                    <span>
+                        Payment ID
+                    </span>
+
+                    <strong>
+                        {{ payment_id }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="success-detail-row">
+
+                <div class="detail-icon">
+                    📦
+                </div>
+
+                <div class="detail-content">
+
+                    <span>
+                        Order ID
+                    </span>
+
+                    <strong>
+                        {{ order_id }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="success-notice">
+
+            <span>✓</span>
+
+            <p>
+                Your order has been placed successfully.
+                You can view your order details from My Orders.
+            </p>
+
+        </div>
+
+
+
+        <div class="success-actions">
+
+            <a href="/user/my-orders" class="view-orders-btn">
+                View My Orders
+                <span>→</span>
+            </a>
+
+
+            <a href="/user/products" class="continue-shopping-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>

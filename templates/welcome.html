@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Shop Smart</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <header class="smart-header">
+
+        <div class="smart-logo">
+
+            <div class="logo-icon">
+                🛒
+            </div>
+
+            <span>
+                Smart<span>Cart</span>
+            </span>
+
+        </div>
+
+
+        <nav class="smart-nav">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="/user-login">
+                Login
+            </a>
+
+            <a href="/admin-signup" class="admin-nav-btn">
+                Admin
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="smart-hero" id="home">
+
+            <div class="hero-left">
+
+                <div class="hero-tag">
+                    ✨ SIMPLE • SMART • SECURE
+                </div>
+
+
+                <h1>
+                    Your Shopping,
+                    <span>Made Smarter.</span>
+                </h1>
+
+
+                <p>
+                    Discover products you love, add them to your cart,
+                    and enjoy a simple and secure shopping experience
+                    with SmartCart.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a href="/user-signup" class="shop-btn">
+                        Start Shopping
+                        <span>→</span>
+                    </a>
+
+
+                    <a href="/user-login" class="login-btn">
+                        Login
+                    </a>
+
+                </div>
+
+
+                <div class="hero-info">
+
+                    <div>
+
+                        <strong>
+                            Easy
+                        </strong>
+
+                        <small>
+                            Shopping
+                        </small>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Secure
+                        </strong>
+
+                        <small>
+                            Payments
+                        </small>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Fast
+                        </strong>
+
+                        <small>
+                            Checkout
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-right">
+
+                <div class="shopping-card">
+
+                    <div class="card-top">
+
+                        <span>
+                            SmartCart
+                        </span>
+
+                        <span class="cart-small">
+                            🛒
+                        </span>
+
+                    </div>
+
+
+                    <div class="shopping-illustration">
+
+                        <div class="circle-bg"></div>
+
+                        <div class="big-cart">
+                            🛒
+                        </div>
+
+                    </div>
+
+
+                    <div class="shopping-content">
+
+                        <h2>
+                            Everything You Need
+                        </h2>
+
+                        <p>
+                            Browse products, manage your cart
+                            and place your order effortlessly.
+                        </p>
+
+
+                        <div class="mini-products">
+
+                            <div class="mini-product">
+                                💻
+                                <span>
+                                    Electronics
+                                </span>
+                            </div>
+
+
+                            <div class="mini-product">
+                                💎
+                                <span>
+                                    Jewellery
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card secure-card">
+
+                    🔒
+
+                    <div>
+
+                        <strong>
+                            Secure
+                        </strong>
+
+                        <small>
+                            Checkout
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card delivery-card">
+
+                    📦
+
+                    <div>
+
+                        <strong>
+                            Easy Orders
+                        </strong>
+
+                        <small>
+                            Track purchases
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="features-section" id="features">
+
+            <div class="section-heading">
+
+                <span>
+                    WHY SMARTCART?
+                </span>
+
+                <h2>
+                    Everything You Need to Shop
+                </h2>
+
+                <p>
+                    A simple shopping experience designed
+                    to make every step easier.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon blue">
+                        🛍️
+                    </div>
+
+                    <h3>
+                        Easy Shopping
+                    </h3>
+
+                    <p>
+                        Browse products and add your
+                        favourite items to your cart easily.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon orange">
+                        🔒
+                    </div>
+
+                    <h3>
+                        Secure Payment
+                    </h3>
+
+                    <p>
+                        Complete your purchases through
+                        a secure payment process.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon green">
+                        📦
+                    </div>
+
+                    <h3>
+                        Manage Orders
+                    </h3>
+
+                    <p>
+                        View your orders and access your
+                        purchase information whenever needed.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="account-section">
+
+            <div class="account-card">
+
+                <div>
+
+                    <span class="account-label">
+                        FOR SHOPPERS
+                    </span>
+
+                    <h2>
+                        Ready to start shopping?
+                    </h2>
+
+                    <p>
+                        Create your account and explore
+                        the SmartCart shopping experience.
+                    </p>
+
+                </div>
+
+
+                <a href="/user-signup" class="account-btn">
+                    Create Account →
+                </a>
+
+            </div>
+
+
+            <div class="account-card admin-card">
+
+                <div>
+
+                    <span class="account-label">
+                        FOR ADMINISTRATORS
+                    </span>
+
+                    <h2>
+                        Manage your store
+                    </h2>
+
+                    <p>
+                        Access the admin portal to manage
+                        products and store information.
+                    </p>
+
+                </div>
+
+
+                <a href="/admin-signup" class="admin-btn">
+                    Admin Portal →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="smart-footer">
+
+        <div class="footer-logo">
+            🛒 SmartCart
+        </div>
+
+        <p>
+            Smart shopping. Simple experience.
+        </p>
+
+        <span>
+            © 2026 SmartCart
+        </span>
+
+    </footer>
+
+</body>
+
+</html>

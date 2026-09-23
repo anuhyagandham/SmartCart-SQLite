@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup - SmartCart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #14213d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #14213d;
+            color: white;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #93c5fd;
+        }
+
+        .signup-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 470px;
+            background: white;
+            padding: 42px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(20, 33, 61, 0.12);
+        }
+
+        .signup-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            background: #e8f0ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .signup-heading {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #14213d;
+            font-size: 28px;
+        }
+
+        .signup-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .otp-button {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .otp-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 11px 13px;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .login-link a {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            margin-top: 22px;
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        footer {
+            background: #14213d;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 18px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .signup-main {
+                padding: 30px 15px;
+            }
+
+            .signup-card {
+                padding: 30px 22px;
+            }
+
+            .signup-heading {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            header {
+                height: auto;
+                padding: 18px 20px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛒 SmartCart</div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/admin-login">Admin Login</a>
+    </nav>
+</header>
+
+
+<main class="signup-main">
+
+    <div class="signup-card">
+
+        <div class="signup-icon">
+            🛡️
+        </div>
+
+        <h1 class="signup-heading">
+            Admin Registration
+        </h1>
+
+        <p class="signup-subtitle">
+            Create your SmartCart administrator account
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+            <div class="flash-messages">
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form method="POST" action="/admin-signup">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter admin name"
+                    required
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter admin email"
+                    required
+                >
+            </div>
+
+
+            <button type="submit" class="otp-button">
+                Send OTP
+            </button>
+
+        </form>
+
+
+        <div class="login-link">
+            Already have an admin account?
+            <a href="/admin-login">Login</a>
+        </div>
+
+
+        <div class="security-note">
+            🔒 Admin registration is protected and requires OTP verification.
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 SmartCart · Smart shopping. Simple experience.
+</footer>
+
+</body>
+</html>

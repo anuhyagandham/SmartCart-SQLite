@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | Verify Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="otp-page">
+
+<header class="smart-header">
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <nav class="smart-nav">
+        <a href="/">Home</a>
+        <a href="/user-login">Login</a>
+    </nav>
+</header>
+
+<main class="otp-main">
+
+    <div class="otp-card">
+
+        <div class="otp-icon">
+            🔐
+        </div>
+
+        <div class="otp-heading">
+            <span>SMARTCART ACCOUNT</span>
+            <h1>Verify your account</h1>
+            <p>
+                Enter the OTP sent to your email and create your password.
+            </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="otp-message">
+                    <span>✓</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="/user/verify-otp">
+
+            <div class="otp-form-group">
+                <label for="otp">Enter OTP</label>
+                <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    autocomplete="one-time-code"
+                    required
+                >
+            </div>
+
+            <div class="otp-form-group">
+                <label for="password">Create Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="otp-submit">
+                Verify & Register
+                <span>→</span>
+            </button>
+
+        </form>
+
+        <div class="otp-divider">
+            <span>Already have an account?</span>
+        </div>
+
+        <a href="/user-login" class="otp-login-link">
+            ← Back to Login
+        </a>
+
+    </div>
+
+</main>
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+</body>
+</html>

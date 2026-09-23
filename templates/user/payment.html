@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Payment</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="payment-page">
+
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+
+        <div class="logo-icon">🛒</div>
+
+        <span>Smart<span>Cart</span></span>
+
+    </a>
+
+
+    <nav class="smart-nav">
+
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/cart">Cart</a>
+        <a href="/user/my-orders">My Orders</a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="payment-main">
+
+
+    <div class="payment-wrapper">
+
+
+        <div class="payment-heading">
+
+            <div class="payment-icon">
+                💳
+            </div>
+
+            <div>
+
+                <span class="section-label">
+                    CHECKOUT
+                </span>
+
+                <h1>
+                    Secure Payment
+                </h1>
+
+                <p>
+                    Complete your payment securely to place your order.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="payment-progress">
+
+            <div class="payment-step completed">
+
+                <span>✓</span>
+
+                <div>
+                    <strong>Address</strong>
+                    <small>Completed</small>
+                </div>
+
+            </div>
+
+
+            <div class="payment-progress-line"></div>
+
+
+            <div class="payment-step active">
+
+                <span>2</span>
+
+                <div>
+                    <strong>Payment</strong>
+                    <small>Complete payment</small>
+                </div>
+
+            </div>
+
+
+            <div class="payment-progress-line"></div>
+
+
+            <div class="payment-step">
+
+                <span>3</span>
+
+                <div>
+                    <strong>Confirmation</strong>
+                    <small>Order complete</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="payment-layout">
+
+
+            <div class="payment-card">
+
+
+                <div class="payment-card-top">
+
+                    <div>
+
+                        <span class="payment-small-label">
+                            ORDER PAYMENT
+                        </span>
+
+                        <h2>
+                            Complete your payment
+                        </h2>
+
+                    </div>
+
+                    <div class="secure-badge">
+                        🔒 Secure
+                    </div>
+
+                </div>
+
+
+
+                <div class="amount-box">
+
+                    <span>
+                        Amount to Pay
+                    </span>
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="razorpay-info">
+
+                    <div class="razorpay-logo">
+                        R
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Pay securely with Razorpay
+                        </strong>
+
+                        <p>
+                            You can pay using UPI, cards, net banking and other available payment methods.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <button
+                    type="button"
+                    id="rzp-button"
+                    class="razorpay-button"
+                >
+
+                    <span>💳</span>
+
+                    Pay ₹{{ total }} Securely
+
+                    <span class="payment-arrow">→</span>
+
+                </button>
+
+
+
+                <div class="payment-security">
+
+                    <span>🔒</span>
+
+                    <p>
+                        Your payment is processed securely through Razorpay.
+                        SmartCart does not store your card or payment details.
+                    </p>
+
+                </div>
+
+
+
+                <a href="/user/address" class="back-address">
+                    ← Back to Address
+                </a>
+
+
+            </div>
+
+
+
+            <div class="payment-summary">
+
+
+                <div class="summary-header">
+
+                    <span class="summary-icon">
+                        🛍️
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Order Summary
+                        </h3>
+
+                        <p>
+                            SmartCart checkout
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Order Amount
+                    </span>
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong class="free">
+                        FREE
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-note">
+
+                    <span>✓</span>
+
+                    <p>
+                        Your order will be processed after successful payment.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+var options = {
+
+    "key": "{{ razorpay_key_id }}",
+
+    "amount": "{{ amount }}",
+
+    "currency": "INR",
+
+    "name": "SmartCart",
+
+    "description": "Order Payment",
+
+    "order_id": "{{ razorpay_order_id }}",
+
+    "prefill": {
+
+        "name": "{{ user_name }}",
+
+        "email": "{{ user_email }}",
+
+        "contact": "{{ user_mobile }}"
+
+    },
+
+    "handler": function (response) {
+
+        var form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "/user/payment-success";
+
+
+        var fields = {
+
+            "razorpay_payment_id": response.razorpay_payment_id,
+
+            "razorpay_order_id": response.razorpay_order_id,
+
+            "razorpay_signature": response.razorpay_signature
+
+        };
+
+
+        for (var name in fields) {
+
+            var input = document.createElement("input");
+
+            input.type = "hidden";
+
+            input.name = name;
+
+            input.value = fields[name];
+
+            form.appendChild(input);
+
+        }
+
+
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }
+
+};
+
+
+var rzp = new Razorpay(options);
+
+
+rzp.on('payment.failed', function (response) {
+
+    alert("Payment failed: " + response.error.description);
+
+});
+
+
+document.getElementById('rzp-button').onclick = function(e) {
+
+    e.preventDefault();
+
+    rzp.open();
+
+};
+
+</script>
+
+
+</body>
+
+</html>

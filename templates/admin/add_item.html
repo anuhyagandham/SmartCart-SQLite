@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - SmartCart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #14213d;
+            min-height: 100vh;
+        }
+
+        header {
+            height: 72px;
+            background: #14213d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 9px 15px;
+            border-radius: 7px;
+        }
+
+        .header-link:hover {
+            background: #243653;
+        }
+
+        .logout-button {
+            background: #dc2626;
+        }
+
+        .logout-button:hover {
+            background: #b91c1c;
+        }
+
+        .page-main {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding: 45px 0 60px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            color: #14213d;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .flash-messages {
+            margin-bottom: 22px;
+        }
+
+        .flash-message {
+            background: #ecfdf5;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(20, 33, 61, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-section-title {
+            color: #14213d;
+            font-size: 19px;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #334155;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #1e293b;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input {
+            height: 48px;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .file-wrapper {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 22px;
+            background: #f8fafc;
+            transition: 0.2s;
+        }
+
+        .file-wrapper:hover {
+            border-color: #2563eb;
+            background: #f8faff;
+        }
+
+        .file-wrapper input {
+            width: 100%;
+            border: none;
+            padding: 0;
+            height: auto;
+            background: transparent;
+        }
+
+        .file-wrapper input:focus {
+            box-shadow: none;
+        }
+
+        .file-note {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            color: #14213d;
+            background: #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            background: #cbd5e1;
+        }
+
+        .submit-button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .security-note {
+            margin-top: 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+            padding: 13px 15px;
+            color: #64748b;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        footer {
+            background: #14213d;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                height: auto;
+                padding: 17px 20px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .header-link {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .page-main {
+                width: 92%;
+                padding: 30px 0 45px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+
+            .back-button,
+            .submit-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 430px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🛒 SmartCart
+    </div>
+
+    <div class="header-actions">
+
+        <a href="/admin/item-list" class="header-link">
+            Products
+        </a>
+
+        <a href="/admin/profile" class="header-link">
+            Profile
+        </a>
+
+        <a href="/admin-logout" class="header-link logout-button">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="page-main">
+
+    <div class="page-header">
+
+        <h1>
+            Add New Product
+        </h1>
+
+        <p>
+            Add a new product to your SmartCart store.
+        </p>
+
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+        <div class="flash-messages">
+
+            {% for category, message in messages %}
+
+                <div class="flash-message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="form-card">
+
+        <h2 class="form-section-title">
+            Product Information
+        </h2>
+
+
+        <form method="POST" action="/admin/add-item" enctype="multipart/form-data">
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter product name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        placeholder="Enter product category"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Enter product description"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Price (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        step="0.01"
+                        name="price"
+                        placeholder="Enter product price"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="image">
+                        Product Image
+                    </label>
+
+                    <div class="file-wrapper">
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*"
+                            required
+                        >
+
+                        <p class="file-note">
+                            Select an image for your product.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a href="/admin/item-list" class="back-button">
+                    ← Back to Products
+                </a>
+
+                <button type="submit" class="submit-button">
+                    Add Product
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div class="security-note">
+            📦 Product information will be added to your SmartCart store.
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 SmartCart · Smart shopping. Simple experience.
+</footer>
+
+</body>
+</html>

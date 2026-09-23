@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out | SmartCart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #14213d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #14213d;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            color: #93c5fd;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .logout-card {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(20, 33, 61, 0.1);
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: #ecfdf5;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .logout-card h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .logout-card p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .register-btn {
+            background: #e2e8f0;
+            color: #14213d;
+        }
+
+        .register-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .footer {
+            background: #14213d;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 22px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 500px) {
+            .header {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .home-link {
+                font-size: 12px;
+            }
+
+            .main {
+                padding: 35px 18px;
+            }
+
+            .logout-card {
+                padding: 35px 22px;
+            }
+
+            .logout-card h1 {
+                font-size: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon">🛒</div>
+        <span>SmartCart</span>
+    </div>
+
+    <a href="/" class="home-link">Home</a>
+</header>
+
+<main class="main">
+
+    <div class="logout-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>Logged Out Successfully!</h1>
+
+        <p>
+            You have successfully logged out from SmartCart.
+            Thank you for shopping with us!
+        </p>
+
+        <div class="buttons">
+
+            <a href="/user-login" class="btn login-btn">
+                Login Again
+            </a>
+
+            <a href="/user-signup" class="btn register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    Smart shopping. Simple experience. &nbsp; © 2026 SmartCart
+</footer>
+
+</body>
+</html>

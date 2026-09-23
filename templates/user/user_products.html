@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="products-page">
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <nav class="smart-nav">
+        <a href="/user-dashboard">Dashboard</a>
+
+        <a href="/user/products" class="active">
+            Products
+        </a>
+
+        <a href="/user/cart">
+            Cart
+            ({{ session.get('cart')|length if session.get('cart') else 0 }})
+        </a>
+
+        <a href="/user/my-orders">
+            My Orders
+        </a>
+
+        <a href="/user-logout" class="logout-nav">
+            Logout
+        </a>
+    </nav>
+
+</header>
+
+<main class="products-main">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="products-message {{ category }}">
+                <span>✓</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="products-heading">
+
+        <div>
+            <span>SMARTCART STORE</span>
+
+            <h1>Explore Our Products</h1>
+
+            <p>
+                Find the products you need and add your favourites to your cart.
+            </p>
+        </div>
+
+        <a href="/user/cart" class="view-cart-btn">
+            🛒 View Cart
+
+            <span>
+                {{ session.get('cart')|length if session.get('cart') else 0 }}
+            </span>
+        </a>
+
+    </section>
+
+    <section class="product-filter-section">
+
+        <form method="GET"
+              action="/user/products"
+              class="product-filter-form">
+
+            <div class="product-search">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request.args.get('search', '') }}"
+                    placeholder="Search products..."
+                >
+
+            </div>
+
+            <div class="product-category">
+
+                <select name="category">
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    {% for category in categories %}
+
+                        <option
+                            value="{{ category.category }}"
+                            {% if request.args.get('category') == category.category %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ category.category }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <button type="submit" class="filter-btn">
+                Search
+            </button>
+
+            <a href="/user/products" class="clear-filter">
+                Clear
+            </a>
+
+        </form>
+
+    </section>
+
+    <section class="products-section">
+
+        <div class="products-top">
+
+            <div>
+
+                <h2>
+                    Available Products
+                </h2>
+
+                <p>
+                    Choose an item to view details or add it to your cart.
+                </p>
+
+            </div>
+
+            <div class="product-count">
+                {{ products|length }} Products
+            </div>
+
+        </div>
+
+        {% if products %}
+
+        <div class="products-grid">
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                <div class="product-image-area">
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/product_images/' ~ product.image) }}"
+                            alt="{{ product.name }}"
+                            class="product-image"
+                        >
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+                            🛍️
+                        </div>
+
+                    {% endif %}
+
+                    <span class="product-category-badge">
+                        {{ product.category }}
+                    </span>
+
+                </div>
+
+                <div class="product-details">
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+                    <div class="product-price">
+                        ₹{{ "%.2f"|format(product.price) }}
+                    </div>
+
+                    <div class="product-actions">
+
+                        <a
+                            href="/user/user-view-item/{{ product.product_id }}"
+                            class="view-product-btn"
+                        >
+                            View Details
+                        </a>
+
+                        <a
+                            href="/user/add-to-cart/{{ product.product_id }}"
+                            class="add-cart-btn"
+                        >
+                            🛒 Add to Cart
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-products">
+
+            <div class="no-products-icon">
+                🔍
+            </div>
+
+            <h2>
+                No Products Found
+            </h2>
+
+            <p>
+                We couldn't find any products matching your search.
+                Try another search or category.
+            </p>
+
+            <a
+                href="/user/products"
+                class="primary-dashboard-btn"
+            >
+                View All Products
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+</body>
+</html>

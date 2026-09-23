@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Delivery Address</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="address-page">
+
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+
+        <div class="logo-icon">🛒</div>
+
+        <span>Smart<span>Cart</span></span>
+
+    </a>
+
+
+    <nav class="smart-nav">
+
+        <a href="/user-dashboard">Dashboard</a>
+
+        <a href="/user/products">Products</a>
+
+        <a href="/user/cart">Cart</a>
+
+        <a href="/user/my-orders">My Orders</a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="address-main">
+
+
+    <div class="address-wrapper">
+
+
+        <div class="address-header">
+
+            <div class="checkout-icon">
+                📦
+            </div>
+
+            <div>
+
+                <span class="section-label">
+                    CHECKOUT
+                </span>
+
+                <h1>
+                    Delivery Address
+                </h1>
+
+                <p>
+                    Enter your delivery details to continue with your order.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="checkout-progress">
+
+            <div class="progress-step active">
+
+                <span>1</span>
+
+                <div>
+                    <strong>Delivery Address</strong>
+                    <small>Enter your details</small>
+                </div>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <span>2</span>
+
+                <div>
+                    <strong>Payment</strong>
+                    <small>Complete payment</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="address-card">
+
+
+            <div class="card-title">
+
+                <h2>Shipping Information</h2>
+
+                <p>
+                    Please provide your complete delivery address.
+                </p>
+
+            </div>
+
+
+
+            <form method="POST" action="/user/address/continue">
+
+
+                <div class="address-form-grid">
+
+
+                    <div class="address-form-group full-width">
+
+                        <label for="full_name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="mobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="mobile"
+                            name="mobile"
+                            placeholder="Enter your mobile number"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="house_number">
+                            House Number / Flat Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="house_number"
+                            name="house_number"
+                            placeholder="Example: Flat 204"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group full-width">
+
+                        <label for="area">
+                            Street / Area
+                        </label>
+
+                        <input
+                            type="text"
+                            id="area"
+                            name="area"
+                            placeholder="Enter your street or area"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="landmark">
+                            Landmark
+                            <span>(Optional)</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="landmark"
+                            name="landmark"
+                            placeholder="Nearby landmark"
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="city">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            placeholder="Enter your city"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="state">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            id="state"
+                            name="state"
+                            placeholder="Enter your state"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="address-form-group">
+
+                        <label for="pincode">
+                            Pincode
+                        </label>
+
+                        <input
+                            type="text"
+                            id="pincode"
+                            name="pincode"
+                            placeholder="Enter 6-digit pincode"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="address-security">
+
+                    <div class="security-icon">
+                        🔒
+                    </div>
+
+                    <div>
+
+                        <strong>Your information is secure</strong>
+
+                        <p>
+                            Your delivery details are used only to process and deliver your order.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="address-actions">
+
+                    <a href="/user/cart" class="back-cart">
+                        ← Back to Cart
+                    </a>
+
+                    <button type="submit" class="continue-checkout">
+                        Continue to Payment
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>

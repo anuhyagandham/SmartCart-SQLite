@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Order Confirmed</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="order-success-page">
+
+
+<header class="smart-header">
+
+    <a href="/" class="smart-logo">
+
+        <div class="logo-icon">🛒</div>
+
+        <span>Smart<span>Cart</span></span>
+
+    </a>
+
+
+    <nav class="smart-nav">
+
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/my-orders">My Orders</a>
+        <a href="/user-logout">Logout</a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="order-success-main">
+
+
+    <div class="order-success-wrapper">
+
+
+        <div class="confirmation-header">
+
+            <div class="confirmation-icon">
+                ✓
+            </div>
+
+            <span class="confirmation-label">
+                ORDER CONFIRMED
+            </span>
+
+            <h1>
+                Order Confirmed!
+            </h1>
+
+            <p>
+                Thank you for shopping with <strong>SmartCart</strong>.
+                Your order has been placed successfully.
+            </p>
+
+        </div>
+
+
+
+        <div class="order-summary-card">
+
+
+            <div class="summary-card-header">
+
+                <div>
+
+                    <span class="summary-label">
+                        ORDER DETAILS
+                    </span>
+
+                    <h2>
+                        Order #{{ order.order_id }}
+                    </h2>
+
+                </div>
+
+
+                <div class="confirmed-status">
+                    <span>✓</span>
+                    {{ order.payment_status }}
+                </div>
+
+            </div>
+
+
+
+            <div class="order-info-grid">
+
+
+                <div class="order-info-item">
+
+                    <span>
+                        ORDER ID
+                    </span>
+
+                    <strong>
+                        #{{ order.order_id }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="order-info-item">
+
+                    <span>
+                        PAYMENT ID
+                    </span>
+
+                    <strong class="payment-id-value">
+                        {{ order.razorpay_payment_id }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="order-info-item">
+
+                    <span>
+                        AMOUNT PAID
+                    </span>
+
+                    <strong class="amount-value">
+                        ₹{{ order.amount }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="order-info-item">
+
+                    <span>
+                        ORDER DATE
+                    </span>
+
+                    <strong>
+                        {{ order.created_at }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="items-card">
+
+
+            <div class="items-card-header">
+
+                <div>
+
+                    <span class="summary-label">
+                        YOUR PURCHASE
+                    </span>
+
+                    <h2>
+                        Order Items
+                    </h2>
+
+                </div>
+
+                <div class="items-icon">
+                    🛍️
+                </div>
+
+            </div>
+
+
+
+            <div class="order-items-list">
+
+
+                {% for item in items %}
+
+
+                <div class="order-item-row">
+
+
+                    <div class="order-item-number">
+                        {{ loop.index }}
+                    </div>
+
+
+                    <div class="order-item-details">
+
+                        <strong>
+                            {{ item.product_name }}
+                        </strong>
+
+                        <span>
+                            Quantity: {{ item.quantity }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="order-item-price">
+
+                        <span>
+                            ₹{{ item.price }} × {{ item.quantity }}
+                        </span>
+
+                        <strong>
+                            ₹{{ item.price * item.quantity }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+
+            <div class="items-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ order.amount }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="order-success-notice">
+
+            <div class="notice-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Payment successfully completed
+                </strong>
+
+                <p>
+                    Your order has been confirmed and your payment has been received.
+                    You can download your invoice or view your orders anytime.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="order-success-actions">
+
+
+            <a
+                href="/user/download-invoice/{{ order.order_id }}"
+                class="download-invoice-btn"
+            >
+                ↓ Download Invoice (PDF)
+            </a>
+
+
+            <a
+                href="/user/my-orders"
+                class="my-orders-btn"
+            >
+                View My Orders
+            </a>
+
+
+            <a
+                href="/user/products"
+                class="continue-shopping-btn"
+            >
+                Continue Shopping
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<footer class="smart-footer">
+
+    <div class="footer-logo">
+        🛒 SmartCart
+    </div>
+
+    <p>
+        Smart shopping. Simple experience.
+    </p>
+
+    <span>
+        © 2026 SmartCart
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>

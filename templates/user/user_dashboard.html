@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-page">
+
+<header class="smart-header">
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <nav class="smart-nav">
+        <a href="/user-dashboard" class="active">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/my-orders">My Orders</a>
+        <a href="/user-logout" class="logout-nav">Logout</a>
+    </nav>
+</header>
+
+<main class="dashboard-main">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="dashboard-message {{ category }}">
+                <span>✓</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="dashboard-hero">
+
+        <div class="dashboard-welcome">
+            <span class="dashboard-label">SMARTCART ACCOUNT</span>
+
+            <h1>Welcome, <span>{{ user_name }}</span>!</h1>
+
+            <p>
+                Welcome to your SmartCart dashboard. Browse products,
+                manage your cart and view your orders from one place.
+            </p>
+
+            <div class="dashboard-actions">
+                <a href="/user/products" class="primary-dashboard-btn">
+                    Start Shopping
+                    <span>→</span>
+                </a>
+
+                <a href="/user/my-orders" class="secondary-dashboard-btn">
+                    View Orders
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-visual">
+            <div class="dashboard-circle"></div>
+
+            <div class="dashboard-cart-icon">
+                🛒
+            </div>
+
+            <div class="dashboard-floating-card cart-floating">
+                <span>🛍️</span>
+                <div>
+                    <strong>Shop Easily</strong>
+                    <small>Find your favourites</small>
+                </div>
+            </div>
+
+            <div class="dashboard-floating-card order-floating">
+                <span>📦</span>
+                <div>
+                    <strong>Manage Orders</strong>
+                    <small>View your purchases</small>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+            <span>QUICK ACCESS</span>
+            <h2>What would you like to do?</h2>
+            <p>Manage your SmartCart shopping experience easily.</p>
+        </div>
+
+        <div class="dashboard-card-grid">
+
+            <a href="/user/products" class="dashboard-card">
+                <div class="dashboard-card-icon blue">
+                    🛍️
+                </div>
+
+                <div>
+                    <h3>Browse Products</h3>
+                    <p>Explore available products and add items to your cart.</p>
+                </div>
+
+                <span class="dashboard-card-arrow">→</span>
+            </a>
+
+            <a href="/user/cart" class="dashboard-card">
+                <div class="dashboard-card-icon orange">
+                    🛒
+                </div>
+
+                <div>
+                    <h3>My Cart</h3>
+                    <p>Review your selected products and proceed to checkout.</p>
+                </div>
+
+                <div class="cart-count">
+                    {{ session.get('cart')|length if session.get('cart') else 0 }}
+                </div>
+            </a>
+
+            <a href="/user/my-orders" class="dashboard-card">
+                <div class="dashboard-card-icon green">
+                    📦
+                </div>
+
+                <div>
+                    <h3>My Orders</h3>
+                    <p>View your previous purchases and order information.</p>
+                </div>
+
+                <span class="dashboard-card-arrow">→</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="dashboard-info-section">
+
+        <div class="dashboard-info-card">
+            <div class="info-icon">🔒</div>
+
+            <div>
+                <h3>Secure Shopping</h3>
+                <p>
+                    Your shopping and payment process is handled through
+                    a secure checkout experience.
+                </p>
+            </div>
+        </div>
+
+        <div class="dashboard-info-card">
+            <div class="info-icon">⚡</div>
+
+            <div>
+                <h3>Simple Experience</h3>
+                <p>
+                    Browse products, manage your cart and access your
+                    orders from one convenient dashboard.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="smart-footer">
+    <div class="footer-logo">🛒 SmartCart</div>
+    <p>Smart shopping. Simple experience.</p>
+    <span>© 2026 SmartCart</span>
+</footer>
+
+</body>
+</html>

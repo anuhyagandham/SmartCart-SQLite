@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart Invoice</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+            padding: 40px 20px;
+        }
+
+        .invoice-box {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(20, 33, 61, 0.10);
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e5e7eb;
+            gap: 20px;
+        }
+
+        .brand h1 {
+            color: #14213d;
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .brand p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .invoice-title {
+            text-align: right;
+        }
+
+        .invoice-title h2 {
+            color: #2563eb;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .invoice-title p {
+            color: #475569;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            color: #14213d;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .customer-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .customer-card p {
+            margin-bottom: 6px;
+            color: #475569;
+        }
+
+        .customer-card strong {
+            color: #14213d;
+        }
+
+        .address-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2563eb;
+            padding: 18px;
+            border-radius: 10px;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        .address-name {
+            color: #14213d;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .items-table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .items-table th {
+            background: #14213d;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .items-table td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .items-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .items-table tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .price {
+            text-align: right;
+        }
+
+        .qty {
+            text-align: center;
+        }
+
+        .total-section {
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .total-box {
+            width: 320px;
+            background: #f8fafc;
+            border: 1px solid #dbe3ef;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .total-label {
+            color: #14213d;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .total-amount {
+            color: #2563eb;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .invoice-footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .invoice-footer p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .thank-you {
+            color: #14213d !important;
+            font-weight: bold;
+            font-size: 15px !important;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .invoice-box {
+                padding: 22px;
+                border-radius: 12px;
+            }
+
+            .invoice-header {
+                flex-direction: column;
+            }
+
+            .invoice-title {
+                text-align: left;
+            }
+
+            .brand h1 {
+                font-size: 26px;
+            }
+
+            .invoice-title h2 {
+                font-size: 21px;
+            }
+
+            .items-table {
+                font-size: 13px;
+            }
+
+            .items-table th,
+            .items-table td {
+                padding: 10px 7px;
+            }
+
+            .total-section {
+                justify-content: stretch;
+            }
+
+            .total-box {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .invoice-box {
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="invoice-box">
+
+    <div class="invoice-header">
+
+        <div class="brand">
+            <h1>🛒 SmartCart</h1>
+            <p>Smart shopping. Simple experience.</p>
+        </div>
+
+        <div class="invoice-title">
+            <h2>INVOICE</h2>
+
+            <p>
+                <strong>Order ID:</strong>
+                {{ order.order_id }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ order.created_at }}
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <h3 class="section-title">
+            Customer Details
+        </h3>
+
+        <div class="customer-card">
+
+            <p>
+                <strong>User ID:</strong>
+                {{ order.user_id }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if address %}
+
+    <div class="section">
+
+        <h3 class="section-title">
+            Delivery Address
+        </h3>
+
+        <div class="address-box">
+
+            <div class="address-name">
+                <strong>{{ address.full_name }}</strong>
+            </div>
+
+            Mobile: {{ address.mobile }}<br>
+
+            House No: {{ address.house_number }}<br>
+
+            Area: {{ address.area }}<br>
+
+            {% if address.landmark %}
+            Landmark: {{ address.landmark }}<br>
+            {% endif %}
+
+            {{ address.city }}, {{ address.state }} - {{ address.pincode }}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="section">
+
+        <h3 class="section-title">
+            Order Items
+        </h3>
+
+        <table class="items-table">
+
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="qty">Qty</th>
+                    <th class="price">Price (₹)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for it in items %}
+
+                <tr>
+
+                    <td>
+                        {{ it.product_name }}
+                    </td>
+
+                    <td class="qty">
+                        {{ it.quantity }}
+                    </td>
+
+                    <td class="price">
+                        ₹{{ it.price }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="total-section">
+
+        <div class="total-box">
+
+            <div class="total-row">
+
+                <span class="total-label">
+                    Grand Total
+                </span>
+
+                <span class="total-amount">
+                    ₹{{ order.amount }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="invoice-footer">
+
+        <p class="thank-you">
+            Thank you for shopping with SmartCart!
+        </p>
+
+        <p>
+            This is a computer-generated invoice.
+        </p>
+
+        <p>
+            © 2026 SmartCart
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
