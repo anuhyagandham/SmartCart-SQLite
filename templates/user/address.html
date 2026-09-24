@@ -324,21 +324,7 @@
 
 
 
-<footer class="smart-footer">
-
-    <div class="footer-logo">
-        🛒 SmartCart
-    </div>
-
-    <p>
-        Smart shopping. Simple experience.
-    </p>
-
-    <span>
-        © 2026 SmartCart
-    </span>
-
-</footer>
+{% include 'components/footer.html' %}
 
 {% with active_page='cart' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>

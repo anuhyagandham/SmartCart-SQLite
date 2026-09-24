@@ -541,9 +541,7 @@
 
 </main>
 
-<footer class="footer">
-    Smart shopping. Simple experience. &nbsp; © 2026 SmartCart
-</footer>
+{% include 'components/footer.html' %}
 
 {% with active_page='profile' %}{% include 'components/admin_bottom_nav.html' %}{% endwith %}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>

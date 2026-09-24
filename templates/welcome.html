@@ -25,22 +25,23 @@
 
         <nav class="smart-nav" id="smartNavMenu">
             <a href="#home">Home</a>
+            <a href="#portals">Portals</a>
             <a href="#features">Features</a>
             {% if session.get('admin_id') %}
-                <a href="/admin-dashboard">Admin Dashboard</a>
+                <a href="/admin-dashboard">🛡️ Admin Dashboard</a>
                 <a href="/admin/item-list">Products</a>
                 <a href="/admin/profile">Profile</a>
                 <a href="/admin-logout" class="logout-nav">Logout</a>
             {% elif session.get('user_id') %}
-                <a href="/user-dashboard">Dashboard</a>
+                <a href="/user-dashboard">👤 Customer Dashboard</a>
                 <a href="/user/products">Products</a>
                 <a href="/user/cart">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
                 <a href="/user/my-orders">My Orders</a>
                 <a href="/user-logout" class="logout-nav">Logout</a>
             {% else %}
-                <a href="/user-login">Login</a>
-                <a href="/user-signup">Create Account</a>
-                <a href="/admin-login" class="admin-nav-btn">Admin</a>
+                <a href="/user-login" class="user-nav-btn">👤 Customer Login</a>
+                <a href="/user-signup">✍️ Sign Up</a>
+                <a href="/admin-login" class="admin-nav-btn">🛡️ Admin Portal</a>
             {% endif %}
         </nav>
     </header>
@@ -64,22 +65,25 @@
 
 
                 <p>
-                    Discover products you love, add them to your cart,
-                    and enjoy a simple and secure shopping experience
-                    with SmartCart.
+                    Discover products you love, manage your cart,
+                    and enjoy a seamless shopping experience.
+                    Log in as a customer or access the store administrator portal below.
                 </p>
 
 
                 <div class="hero-buttons">
 
-                    <a href="/user-signup" class="shop-btn">
-                        Start Shopping
+                    <a href="/user-login" class="shop-btn">
+                        👤 Customer Login
                         <span>→</span>
                     </a>
 
+                    <a href="/user-signup" class="secondary-hero-btn">
+                        ✍️ Sign Up
+                    </a>
 
-                    <a href="/user-login" class="login-btn">
-                        Login
+                    <a href="/admin-login" class="admin-hero-btn">
+                        🛡️ Admin Portal
                     </a>
 
                 </div>
@@ -235,6 +239,52 @@
 
         </section>
 
+        <!-- PORTAL SELECTION SECTION -->
+        <section class="portal-selection-section" id="portals">
+            <div class="section-heading">
+                <span>CHOOSE YOUR PORTAL</span>
+                <h2>Are you a Customer or Store Administrator?</h2>
+                <p>Select your portal below to sign in or create an account.</p>
+            </div>
+
+            <div class="portal-cards-grid">
+                <!-- Customer Portal Card -->
+                <div class="portal-card customer-portal-card">
+                    <div class="portal-card-header">
+                        <div class="portal-icon">🛍️</div>
+                        <span class="portal-badge customer-badge">CUSTOMER PORTAL</span>
+                    </div>
+                    <h3>Customer / Shopper Access</h3>
+                    <p>Browse products, add items to cart, order securely with Razorpay checkout, and view order history with invoice downloads.</p>
+                    <div class="portal-actions">
+                        <a href="/user-login" class="portal-primary-btn">
+                            👤 Customer Login <span>→</span>
+                        </a>
+                        <a href="/user-signup" class="portal-secondary-btn">
+                            ✍️ Create New Account
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Admin Portal Card -->
+                <div class="portal-card admin-portal-card">
+                    <div class="portal-card-header">
+                        <div class="portal-icon">🛡️</div>
+                        <span class="portal-badge admin-badge">STORE ADMIN</span>
+                    </div>
+                    <h3>Administrator Access</h3>
+                    <p>Manage store inventory, update product listings, upload product photos, edit prices & categories, and manage admin account.</p>
+                    <div class="portal-actions">
+                        <a href="/admin-login" class="portal-admin-btn">
+                            🛡️ Admin Login <span>→</span>
+                        </a>
+                        <a href="/admin-signup" class="portal-secondary-btn">
+                            🔑 Register New Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="features-section" id="features">
 
@@ -376,21 +426,7 @@
     </main>
 
 
-    <footer class="smart-footer">
-
-        <div class="footer-logo">
-            🛒 SmartCart
-        </div>
-
-        <p>
-            Smart shopping. Simple experience.
-        </p>
-
-        <span>
-            © 2026 SmartCart
-        </span>
-
-    </footer>
+    {% include 'components/footer.html' %}
 
     {% if session.get('admin_id') %}
         {% with active_page='dashboard' %}{% include 'components/admin_bottom_nav.html' %}{% endwith %}

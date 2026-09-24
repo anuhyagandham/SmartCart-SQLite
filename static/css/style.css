@@ -5519,7 +5519,9 @@ body {
 .smart-nav {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    margin-left: auto;
+    padding-right: 16px;
 }
 
 .smart-nav a {
@@ -5550,9 +5552,19 @@ body {
     color: #ffffff;
 }
 
+.smart-nav .user-nav-btn {
+    background: #2563eb;
+    color: #ffffff !important;
+}
+
+.smart-nav .user-nav-btn:hover {
+    background: #1d4ed8;
+}
+
 .smart-nav .admin-nav-btn {
     background: #14213d;
     color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .smart-nav .admin-nav-btn:hover {
@@ -5810,4 +5822,318 @@ body {
 
 .resend-otp-btn:hover {
     text-decoration: underline;
+}
+
+/* =========================================================
+   RICH FOOTER WITH ICONS & PORTAL LINKS
+   ========================================================= */
+
+.smart-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 50px 5% 30px;
+    border-top: 1px solid #1e293b;
+    font-size: 14px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.footer-logo span {
+    color: #3b82f6;
+}
+
+.footer-tagline {
+    margin: 12px 0 20px;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.feature-tag {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #334155;
+}
+
+.footer-links-group h4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.footer-links-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links-group a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-group a:hover {
+    color: #3b82f6;
+    transform: translateX(3px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 25px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================================
+   PORTAL SELECTION CARDS (CLEAR USER VS ADMIN PORTALS)
+   ========================================================= */
+
+.portal-selection-section {
+    padding: 70px 5%;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.portal-cards-grid {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.portal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 38px 32px;
+    text-align: left;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.portal-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+.customer-portal-card {
+    border-top: 5px solid #2563eb;
+}
+
+.admin-portal-card {
+    border-top: 5px solid #14213d;
+    background: #fafafa;
+}
+
+.portal-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.portal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.admin-portal-card .portal-icon {
+    background: #e2e8f0;
+}
+
+.portal-badge {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.customer-badge {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.admin-badge {
+    background: #14213d;
+    color: #ffffff;
+}
+
+.portal-card h3 {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.portal-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.portal-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.portal-primary-btn,
+.portal-admin-btn,
+.portal-secondary-btn {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.portal-primary-btn {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+.portal-primary-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.portal-admin-btn {
+    background: #14213d;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(20, 33, 61, 0.25);
+}
+
+.portal-admin-btn:hover {
+    background: #0f172a;
+    transform: translateY(-2px);
+}
+
+.portal-secondary-btn {
+    background: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+}
+
+.portal-secondary-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.admin-hero-btn {
+    background: #14213d;
+    color: #ffffff;
+    padding: 13px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.admin-hero-btn:hover {
+    background: #0f172a;
+    transform: translateY(-2px);
+}
+
+.secondary-hero-btn {
+    background: #ffffff;
+    color: #14213d;
+    border: 1.5px solid #cbd5e1;
+    padding: 13px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.secondary-hero-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .portal-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portal-actions {
+        flex-direction: column;
+    }
+
+    .portal-primary-btn,
+    .portal-admin-btn,
+    .portal-secondary-btn {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
 }
