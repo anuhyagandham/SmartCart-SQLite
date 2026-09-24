@@ -1560,6 +1560,26 @@ def user_dashboard():
 
 
 # =========================================================
+# USER PROFILE
+# =========================================================
+
+@app.route('/user/profile')
+def user_profile():
+
+    if 'user_id' not in session:
+        flash("Please login to access your profile!", "danger")
+        return redirect('/user-login')
+
+    return render_template(
+        "user/user_profile.html",
+        user_name=session.get('user_name'),
+        user_email=session.get('user_email'),
+        user_id=session.get('user_id'),
+        active_page='profile'
+    )
+
+
+# =========================================================
 # USER VIEW PRODUCTS
 # =========================================================
 

@@ -5697,12 +5697,33 @@ body {
     }
 
     .smart-header {
+        height: 64px;
         padding: 0 16px;
-        position: relative;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
     }
 
     .smart-nav-toggle {
-        display: flex;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+    .smart-nav-toggle svg {
+        display: block;
+        width: 20px;
+        height: 20px;
     }
 
     .smart-nav {

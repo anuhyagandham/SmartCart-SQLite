@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | SmartCart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .user-profile-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .profile-card-main {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .profile-card-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 36px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #2563eb;
+            font-size: 38px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-card-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-card-header p {
+            color: #dbeafe;
+            font-size: 15px;
+            margin: 0 0 14px;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .profile-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .profile-detail-item {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .profile-detail-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-detail-info small {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .profile-detail-info strong {
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        .profile-actions-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .profile-action-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        .profile-action-card:hover {
+            transform: translateY(-3px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .profile-action-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #eff6ff;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-action-card.logout .profile-action-icon {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .profile-action-card.logout:hover {
+            border-color: #ef4444;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.12);
+        }
+
+        .profile-action-text h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0 0 2px;
+        }
+
+        .profile-action-text p {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .user-profile-container {
+                margin: 20px auto;
+                padding: 0 14px;
+            }
+            .profile-card-header {
+                padding: 28px 16px;
+            }
+            .profile-details-grid {
+                padding: 16px;
+                gap: 12px;
+            }
+            .profile-actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+
+<header class="smart-header">
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <nav class="smart-nav" id="smartNavMenu">
+        <a href="/user-dashboard">Dashboard</a>
+        <a href="/user/products">Products</a>
+        <a href="/user/cart">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
+        <a href="/user/my-orders">My Orders</a>
+        <a href="/user/profile" class="active">Profile</a>
+        <a href="/user-logout" class="logout-nav">Logout</a>
+    </nav>
+</header>
+
+<main class="user-profile-container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="dashboard-message {{ category }}">
+                <span>✓</span>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="profile-card-main">
+        <div class="profile-card-header">
+            <div class="profile-avatar">
+                {{ user_name[0]|upper if user_name else '👤' }}
+            </div>
+            <h1>{{ user_name if user_name else 'SmartCart User' }}</h1>
+            <p>{{ user_email if user_email else 'Customer Account' }}</p>
+            <span class="profile-badge">
+                ✓ Verified Customer
+            </span>
+        </div>
+
+        <div class="profile-details-grid">
+            <div class="profile-detail-item">
+                <div class="profile-detail-icon">👤</div>
+                <div class="profile-detail-info">
+                    <small>Full Name</small>
+                    <strong>{{ user_name if user_name else 'N/A' }}</strong>
+                </div>
+            </div>
+
+            <div class="profile-detail-item">
+                <div class="profile-detail-icon">✉️</div>
+                <div class="profile-detail-info">
+                    <small>Email Address</small>
+                    <strong>{{ user_email if user_email else 'N/A' }}</strong>
+                </div>
+            </div>
+
+            <div class="profile-detail-item">
+                <div class="profile-detail-icon">🆔</div>
+                <div class="profile-detail-info">
+                    <small>Account ID</small>
+                    <strong>#USER-{{ user_id if user_id else '001' }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="profile-actions-title">⚡ Quick Account Options</h2>
+
+    <div class="profile-actions-grid">
+        <a href="/user/products" class="profile-action-card">
+            <div class="profile-action-icon">🛍️</div>
+            <div class="profile-action-text">
+                <h3>Browse Products</h3>
+                <p>Explore store items & deals</p>
+            </div>
+        </a>
+
+        <a href="/user/my-orders" class="profile-action-card">
+            <div class="profile-action-icon">📦</div>
+            <div class="profile-action-text">
+                <h3>My Orders</h3>
+                <p>Track order history & invoices</p>
+            </div>
+        </a>
+
+        <a href="/user/cart" class="profile-action-card">
+            <div class="profile-action-icon">🛒</div>
+            <div class="profile-action-text">
+                <h3>Shopping Cart</h3>
+                <p>Manage items ready to checkout</p>
+            </div>
+        </a>
+
+        <a href="/user/forgot-password" class="profile-action-card">
+            <div class="profile-action-icon">🔑</div>
+            <div class="profile-action-text">
+                <h3>Reset Password</h3>
+                <p>Update account security</p>
+            </div>
+        </a>
+
+        <a href="/user-logout" class="profile-action-card logout">
+            <div class="profile-action-icon">🚪</div>
+            <div class="profile-action-text">
+                <h3>Logout</h3>
+                <p>Sign out of your account</p>
+            </div>
+        </a>
+    </div>
+
+</main>
+
+{% include 'components/footer.html' %}
+
+{% with active_page='profile' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
