@@ -870,10 +870,6 @@ a {
 
 @media (max-width: 900px) {
 
-    .smart-header {
-        padding: 15px 5%;
-    }
-
 
     .smart-hero {
         grid-template-columns: 1fr;
@@ -931,16 +927,6 @@ a {
 ========================= */
 
 @media (max-width: 600px) {
-
-    .smart-header {
-        height: auto;
-
-        flex-direction: column;
-
-        gap: 15px;
-
-        padding: 18px 5%;
-    }
 
 
     .smart-nav {
@@ -5697,33 +5683,34 @@ body {
     }
 
     .smart-header {
-        height: 64px;
-        padding: 0 16px;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-        box-sizing: border-box;
+        height: 64px !important;
+        padding: 0 20px !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        box-sizing: border-box !important;
     }
 
     .smart-nav-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        margin-left: auto;
-        flex-shrink: 0;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 42px !important;
+        height: 42px !important;
+        padding: 0 !important;
+        margin: 0 0 0 auto !important;
+        flex-shrink: 0 !important;
     }
 
     .smart-nav-toggle svg {
-        display: block;
-        width: 20px;
-        height: 20px;
+        display: block !important;
+        width: 20px !important;
+        height: 20px !important;
     }
 
     .smart-nav {
