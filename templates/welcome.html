@@ -16,19 +16,10 @@
 <body>
 
     <header class="smart-header">
-
-        <div class="smart-logo">
-
-            <div class="logo-icon">
-                🛒
-            </div>
-
-            <span>
-                Smart<span>Cart</span>
-            </span>
-
-        </div>
-
+        <a href="/" class="smart-logo">
+            <div class="logo-icon">🛒</div>
+            <span>Smart<span>Cart</span></span>
+        </a>
 
         <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
@@ -38,11 +29,13 @@
             {% if session.get('admin_id') %}
                 <a href="/admin-dashboard">Admin Dashboard</a>
                 <a href="/admin/item-list">Products</a>
-                <a href="/admin-logout" class="admin-nav-btn">Logout</a>
+                <a href="/admin/profile">Profile</a>
+                <a href="/admin-logout" class="logout-nav">Logout</a>
             {% elif session.get('user_id') %}
                 <a href="/user-dashboard">Dashboard</a>
                 <a href="/user/products">Products</a>
                 <a href="/user/cart">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
+                <a href="/user/my-orders">My Orders</a>
                 <a href="/user-logout" class="logout-nav">Logout</a>
             {% else %}
                 <a href="/user-login">Login</a>
@@ -50,7 +43,6 @@
                 <a href="/admin-login" class="admin-nav-btn">Admin</a>
             {% endif %}
         </nav>
-
     </header>
 
 
@@ -399,6 +391,12 @@
         </span>
 
     </footer>
+
+    {% if session.get('admin_id') %}
+        {% with active_page='dashboard' %}{% include 'components/admin_bottom_nav.html' %}{% endwith %}
+    {% elif session.get('user_id') %}
+        {% with active_page='dashboard' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
+    {% endif %}
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Profile | SmartCart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <style>
         * {
@@ -385,16 +386,23 @@
 
 <body>
 
-<header class="header">
-    <div class="logo">
-        <div class="logo-icon">🛒</div>
-        <span>SmartCart</span>
-    </div>
+<header class="smart-header smart-header-dark">
 
-    <div class="header-right">
-        <span class="admin-label">Administrator</span>
-        <a href="/admin-logout" class="logout-btn">Logout</a>
-    </div>
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
+
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="smart-nav" id="smartNavMenu">
+        <a href="/admin-dashboard">Dashboard</a>
+        <a href="/admin/add-item">Add Item</a>
+        <a href="/admin/item-list">Products</a>
+        <a href="/admin/profile" class="active">Profile</a>
+        <a href="/admin-logout" class="logout-nav">Logout</a>
+    </nav>
+
 </header>
 
 <main class="main">
@@ -537,5 +545,7 @@
     Smart shopping. Simple experience. &nbsp; © 2026 SmartCart
 </footer>
 
+{% with active_page='profile' %}{% include 'components/admin_bottom_nav.html' %}{% endwith %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

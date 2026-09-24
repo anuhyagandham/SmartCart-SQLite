@@ -17,7 +17,9 @@
         <span>Smart<span>Cart</span></span>
     </a>
 
-    <nav class="smart-nav">
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="smart-nav" id="smartNavMenu">
         <a href="/user-dashboard">Dashboard</a>
         <a href="/user/products">Products</a>
 
@@ -430,5 +432,7 @@ calculateTotal();
 
 </script>
 
+{% with active_page='cart' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

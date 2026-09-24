@@ -268,5 +268,7 @@
 
 </footer>
 
+{% with active_page='products' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

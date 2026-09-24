@@ -177,6 +177,7 @@
     <span>© 2026 SmartCart</span>
 </footer>
 
+{% with active_page='dashboard' %}{% include 'components/user_bottom_nav.html' %}{% endwith %}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

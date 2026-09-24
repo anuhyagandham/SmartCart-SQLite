@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product - SmartCart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <style>
         * {
@@ -320,27 +321,22 @@
 
 <body>
 
-<header>
+<header class="smart-header smart-header-dark">
 
-    <div class="logo">
-        🛒 SmartCart
-    </div>
+    <a href="/" class="smart-logo">
+        <div class="logo-icon">🛒</div>
+        <span>Smart<span>Cart</span></span>
+    </a>
 
-    <div class="header-actions">
+    <button class="smart-nav-toggle" id="smartNavToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-        <a href="/admin/item-list" class="header-link">
-            Products
-        </a>
-
-        <a href="/admin/profile" class="header-link">
-            Profile
-        </a>
-
-        <a href="/admin-logout" class="header-link logout-button">
-            Logout
-        </a>
-
-    </div>
+    <nav class="smart-nav" id="smartNavMenu">
+        <a href="/admin-dashboard">Dashboard</a>
+        <a href="/admin/add-item" class="active">Add Item</a>
+        <a href="/admin/item-list">Products</a>
+        <a href="/admin/profile">Profile</a>
+        <a href="/admin-logout" class="logout-nav">Logout</a>
+    </nav>
 
 </header>
 
@@ -518,5 +514,7 @@
     © 2026 SmartCart · Smart shopping. Simple experience.
 </footer>
 
+{% with active_page='add_item' %}{% include 'components/admin_bottom_nav.html' %}{% endwith %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
