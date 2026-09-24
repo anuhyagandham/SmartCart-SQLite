@@ -2,15 +2,10 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SmartCart | Shop Smart</title>
-
+    <title>SmartCart | Welcome to SmartCart</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body>
@@ -25,23 +20,22 @@
 
         <nav class="smart-nav" id="smartNavMenu">
             <a href="#home">Home</a>
-            <a href="#portals">Portals</a>
             <a href="#features">Features</a>
             {% if session.get('admin_id') %}
-                <a href="/admin-dashboard">🛡️ Admin Dashboard</a>
+                <a href="/admin-dashboard">Admin Dashboard</a>
                 <a href="/admin/item-list">Products</a>
                 <a href="/admin/profile">Profile</a>
                 <a href="/admin-logout" class="logout-nav">Logout</a>
             {% elif session.get('user_id') %}
-                <a href="/user-dashboard">👤 Customer Dashboard</a>
+                <a href="/user-dashboard">Dashboard</a>
                 <a href="/user/products">Products</a>
                 <a href="/user/cart">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
                 <a href="/user/my-orders">My Orders</a>
                 <a href="/user-logout" class="logout-nav">Logout</a>
             {% else %}
-                <a href="/user-login" class="user-nav-btn">👤 Customer Login</a>
-                <a href="/user-signup">✍️ Sign Up</a>
-                <a href="/admin-login" class="admin-nav-btn">🛡️ Admin Portal</a>
+                <a href="/user-login">User Login</a>
+                <a href="/user-signup">Create Account</a>
+                <a href="/admin-login" class="admin-nav-btn">Admin Login</a>
             {% endif %}
         </nav>
     </header>
@@ -49,6 +43,7 @@
 
     <main>
 
+        <!-- HERO SECTION -->
         <section class="smart-hero" id="home">
 
             <div class="hero-left">
@@ -57,367 +52,172 @@
                     ✨ SIMPLE • SMART • SECURE
                 </div>
 
-
                 <h1>
-                    Your Shopping,
-                    <span>Made Smarter.</span>
+                    Welcome to
+                    <span>SmartCart.</span>
                 </h1>
 
-
                 <p>
-                    Discover products you love, manage your cart,
-                    and enjoy a seamless shopping experience.
-                    Log in as a customer or access the store administrator portal below.
+                    Shop products, manage your cart, place orders and track your purchases with SmartCart.
                 </p>
 
-
                 <div class="hero-buttons">
-
                     <a href="/user-login" class="shop-btn">
-                        👤 Customer Login
+                        User Login
                         <span>→</span>
                     </a>
 
                     <a href="/user-signup" class="secondary-hero-btn">
-                        ✍️ Sign Up
+                        Create Account
                     </a>
 
                     <a href="/admin-login" class="admin-hero-btn">
-                        🛡️ Admin Portal
+                        Admin Login
                     </a>
-
                 </div>
 
-
                 <div class="hero-info">
-
                     <div>
-
-                        <strong>
-                            Easy
-                        </strong>
-
-                        <small>
-                            Shopping
-                        </small>
-
+                        <strong>Easy</strong>
+                        <small>Shopping</small>
                     </div>
 
-
                     <div>
-
-                        <strong>
-                            Secure
-                        </strong>
-
-                        <small>
-                            Payments
-                        </small>
-
+                        <strong>Secure</strong>
+                        <small>Payments</small>
                     </div>
 
-
                     <div>
-
-                        <strong>
-                            Fast
-                        </strong>
-
-                        <small>
-                            Checkout
-                        </small>
-
+                        <strong>Fast</strong>
+                        <small>Checkout</small>
                     </div>
-
                 </div>
 
             </div>
-
 
             <div class="hero-right">
 
                 <div class="shopping-card">
 
                     <div class="card-top">
-
-                        <span>
-                            SmartCart
-                        </span>
-
-                        <span class="cart-small">
-                            🛒
-                        </span>
-
+                        <span>SmartCart</span>
+                        <span class="cart-small">🛒</span>
                     </div>
-
 
                     <div class="shopping-illustration">
-
                         <div class="circle-bg"></div>
-
-                        <div class="big-cart">
-                            🛒
-                        </div>
-
+                        <div class="big-cart">🛒</div>
                     </div>
-
 
                     <div class="shopping-content">
-
-                        <h2>
-                            Everything You Need
-                        </h2>
-
-                        <p>
-                            Browse products, manage your cart
-                            and place your order effortlessly.
-                        </p>
-
+                        <h2>Everything You Need</h2>
+                        <p>Browse products, manage your cart and place your order effortlessly.</p>
 
                         <div class="mini-products">
-
                             <div class="mini-product">
-                                💻
-                                <span>
-                                    Electronics
-                                </span>
+                                💻 <span>Electronics</span>
                             </div>
-
-
                             <div class="mini-product">
-                                💎
-                                <span>
-                                    Jewellery
-                                </span>
+                                💎 <span>Jewellery</span>
                             </div>
-
                         </div>
-
                     </div>
 
                 </div>
-
 
                 <div class="floating-card secure-card">
-
                     🔒
-
                     <div>
-
-                        <strong>
-                            Secure
-                        </strong>
-
-                        <small>
-                            Checkout
-                        </small>
-
+                        <strong>Secure</strong>
+                        <small>Checkout</small>
                     </div>
-
                 </div>
 
-
                 <div class="floating-card delivery-card">
-
                     📦
-
                     <div>
-
-                        <strong>
-                            Easy Orders
-                        </strong>
-
-                        <small>
-                            Track purchases
-                        </small>
-
+                        <strong>Easy Orders</strong>
+                        <small>Track purchases</small>
                     </div>
-
                 </div>
 
             </div>
 
         </section>
+
 
         <!-- PORTAL SELECTION SECTION -->
         <section class="portal-selection-section" id="portals">
             <div class="section-heading">
-                <span>CHOOSE YOUR PORTAL</span>
-                <h2>Are you a Customer or Store Administrator?</h2>
-                <p>Select your portal below to sign in or create an account.</p>
+                <span>WELCOME TO SMARTCART</span>
+                <h2>Choose how you want to continue</h2>
             </div>
 
             <div class="portal-cards-grid">
-                <!-- Customer Portal Card -->
+                <!-- USER / CUSTOMER CARD -->
                 <div class="portal-card customer-portal-card">
                     <div class="portal-card-header">
-                        <div class="portal-icon">🛍️</div>
-                        <span class="portal-badge customer-badge">CUSTOMER PORTAL</span>
+                        <div class="portal-icon">👤</div>
+                        <span class="portal-badge customer-badge">USER / CUSTOMER</span>
                     </div>
-                    <h3>Customer / Shopper Access</h3>
-                    <p>Browse products, add items to cart, order securely with Razorpay checkout, and view order history with invoice downloads.</p>
+                    <h3>USER / CUSTOMER</h3>
+                    <p>Shop products, manage your cart, place orders and track purchases.</p>
                     <div class="portal-actions">
                         <a href="/user-login" class="portal-primary-btn">
-                            👤 Customer Login <span>→</span>
+                            User Login <span>→</span>
                         </a>
                         <a href="/user-signup" class="portal-secondary-btn">
-                            ✍️ Create New Account
+                            Create Account
                         </a>
                     </div>
                 </div>
 
-                <!-- Admin Portal Card -->
+                <!-- ADMIN CARD -->
                 <div class="portal-card admin-portal-card">
                     <div class="portal-card-header">
-                        <div class="portal-icon">🛡️</div>
-                        <span class="portal-badge admin-badge">STORE ADMIN</span>
+                        <div class="portal-icon">🔐</div>
+                        <span class="portal-badge admin-badge">ADMIN</span>
                     </div>
-                    <h3>Administrator Access</h3>
-                    <p>Manage store inventory, update product listings, upload product photos, edit prices & categories, and manage admin account.</p>
+                    <h3>ADMIN</h3>
+                    <p>Manage products, view orders, and manage the SmartCart store.</p>
                     <div class="portal-actions">
                         <a href="/admin-login" class="portal-admin-btn">
-                            🛡️ Admin Login <span>→</span>
-                        </a>
-                        <a href="/admin-signup" class="portal-secondary-btn">
-                            🔑 Register New Admin
+                            Admin Login <span>→</span>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
+
+        <!-- FEATURES SECTION -->
         <section class="features-section" id="features">
 
             <div class="section-heading">
-
-                <span>
-                    WHY SMARTCART?
-                </span>
-
-                <h2>
-                    Everything You Need to Shop
-                </h2>
-
-                <p>
-                    A simple shopping experience designed
-                    to make every step easier.
-                </p>
-
+                <span>WHY SMARTCART?</span>
+                <h2>Everything You Need to Shop</h2>
+                <p>A simple shopping experience designed to make every step easier.</p>
             </div>
-
 
             <div class="feature-grid">
 
                 <div class="feature-card">
-
-                    <div class="feature-icon blue">
-                        🛍️
-                    </div>
-
-                    <h3>
-                        Easy Shopping
-                    </h3>
-
-                    <p>
-                        Browse products and add your
-                        favourite items to your cart easily.
-                    </p>
-
+                    <div class="feature-icon blue">🛍️</div>
+                    <h3>Easy Shopping</h3>
+                    <p>Browse products and add your favourite items to your cart easily.</p>
                 </div>
-
 
                 <div class="feature-card">
-
-                    <div class="feature-icon orange">
-                        🔒
-                    </div>
-
-                    <h3>
-                        Secure Payment
-                    </h3>
-
-                    <p>
-                        Complete your purchases through
-                        a secure payment process.
-                    </p>
-
+                    <div class="feature-icon orange">🔒</div>
+                    <h3>Secure Payment</h3>
+                    <p>Complete your purchases through a secure payment process.</p>
                 </div>
-
 
                 <div class="feature-card">
-
-                    <div class="feature-icon green">
-                        📦
-                    </div>
-
-                    <h3>
-                        Manage Orders
-                    </h3>
-
-                    <p>
-                        View your orders and access your
-                        purchase information whenever needed.
-                    </p>
-
+                    <div class="feature-icon green">📦</div>
+                    <h3>Manage Orders</h3>
+                    <p>View your orders and access your purchase information whenever needed.</p>
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <section class="account-section">
-
-            <div class="account-card">
-
-                <div>
-
-                    <span class="account-label">
-                        FOR SHOPPERS
-                    </span>
-
-                    <h2>
-                        Ready to start shopping?
-                    </h2>
-
-                    <p>
-                        Create your account and explore
-                        the SmartCart shopping experience.
-                    </p>
-
-                </div>
-
-
-                <a href="/user-signup" class="account-btn">
-                    Create Account →
-                </a>
-
-            </div>
-
-
-            <div class="account-card admin-card">
-
-                <div>
-
-                    <span class="account-label">
-                        FOR ADMINISTRATORS
-                    </span>
-
-                    <h2>
-                        Manage your store
-                    </h2>
-
-                    <p>
-                        Access the admin portal to manage
-                        products and store information.
-                    </p>
-
-                </div>
-
-
-                <a href="/admin-signup" class="admin-btn">
-                    Admin Portal →
-                </a>
 
             </div>
 
